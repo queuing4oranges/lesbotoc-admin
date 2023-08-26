@@ -1,0 +1,35 @@
+//heading-font: 'Amatic SC', cursive;
+@import url("https://fonts.googleapis.com/css2?family=Amatic+SC:wght@400;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,200;1,300;1,400;1,500;1,600;1,700&display=swap");
+
+//user-colours:
+$lesbotoc: #7ab6cb;
+$user-red: #eb5a49;
+$lesbotoc-dark: #4d8eb5;
+$user-beige-light: #f5efea;
+$user-lightred: #ed7f71;
+$dark-petrol: #003243;
+$user-almostblack: #2c353c;
+
+// other colours:
+$brown: #9a4700;
+$light-blue: #e6f4f1;
+$user-beige-medium: #feebdd;
+$user-beige-dark: #f5e2d3;
+$user-darkred: #b84639;
+
+//admin-input:
+$input-look: #7ab6cb solid 2px;
+$title-font: "Amatic SC", cursive, Arial;
+$text-font: "Poppins", sans-serif, Arial, Helvetica, sans-serif;
+
+//mixins:
+@mixin center-object {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+//new color palette
+$text-bg-color: #304635;
+$text-color: #feebdd;

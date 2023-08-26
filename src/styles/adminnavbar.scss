@@ -1,0 +1,25 @@
+/*AdminNavbar*/
+.blue-green-bg {
+  background-color: #003243;
+}
+
+.navbar-nav .nav-link a {
+  color: #e6f4f1;
+  text-decoration: none;
+}
+
+.navbar-nav .nav-link a:hover,
+.navbar-nav .nav-link a.active {
+  color: $lesbotoc;
+}
+
+.navbar-logo {
+  background-color: white;
+  height: 30px;
+  width: auto;
+  padding: 10%;
+}
+
+.navbar-toggler-icon {
+  background-color: white;
+}

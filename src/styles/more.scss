@@ -1,0 +1,70 @@
+.more-container {
+  display: flex;
+  justify-content: space-between;
+  width: 90vw;
+  margin: 20px auto;
+}
+
+.more-data-container {
+  // border: green 1px solid;
+  display: flex;
+  flex-direction: column;
+
+  max-width: 20vw;
+
+  & button {
+    min-width: 150px;
+    max-width: 150px;
+    font-size: 12px;
+    height: 50px;
+    margin-bottom: 10px;
+    margin-right: 5px;
+  }
+}
+
+.signup-container {
+  // border: red 1px solid;
+  background-color: #e6f4f1;
+  width: 40vw;
+  padding: 10px;
+  margin-right: 5px;
+}
+
+.signup-speeddating-cont {
+  // background-color: #ed7f71;
+  color: $dark-petrol;
+  & p {
+    text-align: left;
+    font-size: 12px;
+  }
+}
+
+.btn-data {
+  font-size: 10px;
+  display: flex;
+  // padding: 10px;
+  // justify-content: space-between;
+  text-align: left;
+  align-items: center;
+
+  & p {
+    width: 80%;
+    margin-bottom: 0;
+    margin-left: 15px;
+  }
+  & svg {
+    width: 20%;
+  }
+}
+
+.speeddaters-table {
+  font-size: 12px;
+}
+
+tbody {
+  text-align: left;
+}
+
+.speed-delete-btn {
+  border: #ed7f71 1px solid;
+}

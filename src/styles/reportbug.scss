@@ -1,0 +1,228 @@
+@import url("https://fonts.googleapis.com/css2?family=Permanent+Marker&display=swap");
+
+.report-container {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+.report-bug-cont {
+  width: 50px;
+  position: fixed;
+  right: 0;
+  bottom: 0;
+  margin-bottom: 10px;
+  background-color: $brown;
+  border-top-left-radius: 5px;
+  border-bottom-left-radius: 5px;
+}
+
+.bug-cont {
+  padding: 5px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.bug-cont .rep-bug {
+  width: 200px;
+  box-shadow: -5px 5px 5px 0px rgba(154, 71, 0, 0.5);
+}
+
+.bug-btn {
+  width: 80%;
+  margin: 10px;
+  background-color: $lesbotoc;
+}
+
+.bug-form-cont {
+  position: fixed;
+  background-color: $brown;
+  right: 0;
+  bottom: 0px;
+  // border: solid 2px green;
+  width: 300px;
+  height: fit-content;
+  display: flex;
+  flex-direction: column;
+
+  border-top-left-radius: 5px;
+  border-bottom-left-radius: 5px;
+  box-shadow: -5px 5px 5px 0px rgba(154, 71, 0, 0.5);
+
+  & form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: white;
+  }
+
+  & .bug-title {
+    margin: 15px auto 10px;
+    width: 80%;
+    font-family: "Permanent Marker", cursive, Arial, Helvetica, sans-serif;
+    letter-spacing: 0.5em;
+  }
+
+  & .bug-title-cont {
+    display: flex;
+    flex-direction: row;
+    position: relative;
+  }
+
+  & textarea {
+    resize: none;
+    width: 80%;
+    height: 100px;
+  }
+
+  & input {
+    width: 80%;
+  }
+  & textarea:focus,
+  input:focus {
+    outline: none;
+  }
+}
+
+.close-x {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  font-weight: 700;
+  font-size: large;
+}
+
+.slide-in-right {
+  -webkit-animation: slide-in-right 0.5s ease-in-out both;
+  animation: slide-in-right 0.5s ease-in-out both;
+}
+
+.slide-out-right {
+  -webkit-animation: slide-out-right 0.5s ease-in-out both;
+  animation: slide-out-right 0.5s ease-in-out both;
+}
+
+/*animation for slide-in*/
+@-webkit-keyframes slide-in-right {
+  0% {
+    -webkit-transform: translateX(1000px);
+    transform: translateX(1000px);
+    opacity: 0;
+  }
+  100% {
+    -webkit-transform: translateX(0);
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+@keyframes slide-in-right {
+  0% {
+    -webkit-transform: translateX(1000px);
+    transform: translateX(1000px);
+    opacity: 0;
+  }
+  100% {
+    -webkit-transform: translateX(0);
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+/*animation for slide-out*/
+
+@-webkit-keyframes slide-out-right {
+  0% {
+    -webkit-transform: translateX(0);
+    transform: translateX(0);
+    opacity: 1;
+  }
+  100% {
+    -webkit-transform: translateX(1000px);
+    transform: translateX(1000px);
+    opacity: 0;
+  }
+}
+@keyframes slide-out-right {
+  0% {
+    -webkit-transform: translateX(0);
+    transform: translateX(0);
+    opacity: 1;
+  }
+  100% {
+    -webkit-transform: translateX(1000px);
+    transform: translateX(1000px);
+    opacity: 0;
+  }
+}
+
+/*animation for bug wiggle*/
+.rep-bug:hover {
+  -webkit-animation: wiggle 0.3s linear 2 both;
+  animation: wiggle 0.3s linear 2 both;
+  cursor: pointer;
+}
+
+@-webkit-keyframes wiggle {
+  0% {
+    -webkit-transform: translate(0);
+    transform: translate(0);
+  }
+  20% {
+    -webkit-transform: translate(-2px, 2px);
+    transform: translate(-2px, 2px);
+  }
+  40% {
+    -webkit-transform: translate(-2px, -2px);
+    transform: translate(-2px, -2px);
+  }
+  60% {
+    -webkit-transform: translate(2px, 2px);
+    transform: translate(2px, 2px);
+  }
+  80% {
+    -webkit-transform: translate(2px, -2px);
+    transform: translate(2px, -2px);
+  }
+  100% {
+    -webkit-transform: translate(0);
+    transform: translate(0);
+  }
+}
+@keyframes wiggle {
+  0% {
+    -webkit-transform: translate(0);
+    transform: translate(0);
+  }
+  20% {
+    -webkit-transform: translate(-2px, 2px);
+    transform: translate(-2px, 2px);
+  }
+  40% {
+    -webkit-transform: translate(-2px, -2px);
+    transform: translate(-2px, -2px);
+  }
+  60% {
+    -webkit-transform: translate(2px, 2px);
+    transform: translate(2px, 2px);
+  }
+  80% {
+    -webkit-transform: translate(2px, -2px);
+    transform: translate(2px, -2px);
+  }
+  100% {
+    -webkit-transform: translate(0);
+    transform: translate(0);
+  }
+}
+
+@media (max-width: 600px) {
+  .bug-form-cont {
+    width: 50%;
+
+    & h6 {
+      font-size: 0.7em;
+    }
+  }
+}

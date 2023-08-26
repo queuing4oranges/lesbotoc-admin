@@ -1,0 +1,23 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700");
+//font-family: 'Poppins', sans-serif;
+
+@import url("https://fonts.googleapis.com/css2?family=Amatic+SC:wght@400;700");
+//font-family: 'Amatic SC', cursive;
+
+//importing main style sheets
+@import "./styles/variables";
+
+//importing admin styles
+@import "./styles/searchbar.scss";
+@import "./styles/contactlist.scss";
+@import "./styles/editmodal.scss";
+
+// @import "./styles/admin.scss";
+@import "./styles/events.scss";
+@import "./styles/reusables";
+@import "./styles/images.scss";
+@import "./styles/reportbug.scss";
+@import "./styles/more.scss";
+@import "./styles/adminlogin.scss";
+
+@import "./styles/adminnavbar.scss";

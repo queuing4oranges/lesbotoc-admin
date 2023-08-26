@@ -1,0 +1,21 @@
+body {
+  margin: 0;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+*,
+::after,
+::before {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.App {
+  text-align: center;
+  font-family: "Poppins", sans-serif, Arial, Helvetica, sans-serif;
+  height: 100vh;
+}
+
+
