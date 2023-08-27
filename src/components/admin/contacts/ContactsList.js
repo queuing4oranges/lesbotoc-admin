@@ -5,7 +5,7 @@ import swal from "sweetalert";
 import { CSVLink } from "react-csv";
 //components
 import AddContact from "./AddContact";
-import Searchbar from "../Searchbar";
+import Searchbar from "./Searchbar";
 import AdminNavbar from "../AdminNavbar";
 import EditModal from "./EditModal";
 import ReportBug from "../../includes/ReportBug";
@@ -43,8 +43,6 @@ export default function ContactsList() {
   if (error) {
     return console.log(error);
   }
-
-  console.log(oneContact);
 
   // const [filteredData, setFilteredData] = useState([]);
   // const [nameInput, setNameInput] = useState("");
@@ -113,8 +111,8 @@ export default function ContactsList() {
     <Fragment>
       <AdminNavbar />
 
-      {/* <h3 className="admin-page-title">Contacts</h3>
-      {successMsg && <p className="alert alert-success alert">{successMsg}</p>} */}
+      <h3 className="admin-page-title">Contacts</h3>
+      {/* {successMsg && <p className="alert alert-success alert">{successMsg}</p>} */}
       <div className="table__container-top">
         Searchbar
         {/* <div className="searchbar-cont">

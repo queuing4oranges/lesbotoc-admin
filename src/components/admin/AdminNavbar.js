@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { NavLink } from "react-router-dom";
 import logo from "../../assets/logo-light.png";
+import { AiOutlineClose, AiOutlineMenu } from "react-icons/ai";
 
 export default function AdminNavbar() {
   const [isOpen, setIsOpen] = useState(false);
@@ -22,7 +23,7 @@ export default function AdminNavbar() {
 
           {/* toggle button for mobile nav */}
           <button
-            className="navbar-toggler"
+            className="navbar-toggler btn btn-outline"
             type="button"
             data-bs-toggle="collapse"
             data-bs-target="#main-nav"
@@ -31,11 +32,9 @@ export default function AdminNavbar() {
             aria-label="Toggle navigation"
             onClick={() => setIsOpen(!isOpen)}
           >
-            {isOpen ? (
-              <i className="bi bi-list"></i>
-            ) : (
-              <i className="bi bi-x"></i>
-            )}
+            <span className="toggler-icon">
+              {isOpen ? <AiOutlineClose /> : <AiOutlineMenu />}
+            </span>
           </button>
 
           {/* navbar-links */}

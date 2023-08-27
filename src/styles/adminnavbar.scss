@@ -20,6 +20,10 @@
   padding: 10%;
 }
 
-.navbar-toggler-icon {
-  background-color: white;
+.toggler-icon {
+  color: white;
+}
+
+.navbar-toggler:focus {
+  outline: none;
 }

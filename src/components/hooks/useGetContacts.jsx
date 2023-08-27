@@ -1,17 +1,18 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import axios from 'axios';
 
-export default function useGetEvents() {
+export default function useGetContacts() {
     const [ contacts, setContacts ] = useState([])
     const [ loading, setLoading ] = useState(false)
     const [ error, setError ] = useState(null)
 
+    useEffect(() => {
     const getContacts = async () => {
         try {
             setLoading(true)
 
             const response = await axios.get("https://api2.queuing4oranges.com/contacts/read.php")
-            const data = response.data;
+            const data = await response.data;
             setContacts(data);
             setLoading(false);
 
@@ -20,8 +21,10 @@ export default function useGetEvents() {
             setLoading(false);
         }
     };
+    getContacts();
+    }, [])
 
   return {
-     contacts, loading, error, getContacts
-  } 
+     contacts, loading, error
+  }
 }

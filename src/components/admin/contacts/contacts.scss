@@ -1,3 +1,19 @@
+//clean css additional to bootstrap:
+
+/***SEARCHBAR***/
+.search-container {
+  width: 50vw;
+}
+
+.edit-list:nth-child(odd) {
+  background-color: #e6f4f1;
+}
+
+.search-input input {
+  width: 100%;
+}
+
+//legacy css below: (needs to be striped)
 .table-body-contacts td,
 .table-body-contacts th {
   text-align: left;
@@ -24,7 +40,7 @@ thead .table-hr {
 .admin-page-title {
   width: 90%;
   margin: auto;
-  padding-top: 100px;
+  padding-top: 10vh;
   display: flex;
 }
 

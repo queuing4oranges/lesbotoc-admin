@@ -8,8 +8,7 @@
 @import "./styles/variables";
 
 //importing admin styles
-@import "./styles/searchbar.scss";
-@import "./styles/contactlist.scss";
+@import "./components/admin/contacts/contacts.scss";
 @import "./styles/editmodal.scss";
 
 // @import "./styles/admin.scss";
