@@ -6,7 +6,7 @@ export default function useGetContacts() {
     const [ loading, setLoading ] = useState(false)
     const [ error, setError ] = useState(null)
 
-    useEffect(() => {
+    // useEffect(() => {
     const getContacts = async () => {
         try {
             setLoading(true)
@@ -21,10 +21,10 @@ export default function useGetContacts() {
             setLoading(false);
         }
     };
-    getContacts();
-    }, [])
+    // getContacts();
+    // }, [])
 
   return {
-     contacts, loading, error
+     contacts, loading, error, getContacts
   }
 }

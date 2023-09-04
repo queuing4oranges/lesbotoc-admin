@@ -1,10 +1,8 @@
-//clean css additional to bootstrap:
+//TODO: clean css additional to bootstrap:
 
-/***SEARCHBAR***/
-.search-container {
-  width: 50vw;
-}
+/***CONTACTSCONTAINER.JS***/
 
+/***SEARCHBAR.JS***/
 .edit-list:nth-child(odd) {
   background-color: #e6f4f1;
 }
@@ -13,51 +11,15 @@
   width: 100%;
 }
 
-//legacy css below: (needs to be striped)
-.table-body-contacts td,
-.table-body-contacts th {
-  text-align: left;
-  padding-left: 5px;
-  font-size: 0.9em;
-  max-height: 45px;
+/***ADDCONTACT.JS***/
+.add-container {
+  font-size: 0.8rem;
 }
 
-thead .table-hr {
-  text-align: left;
+.form-cont {
+  background-color: rgb(248, 247, 247);
 }
 
-.contacts__table {
-  width: 90%;
-  margin: auto;
-  color: $dark-petrol;
-}
-
-.td-crud {
-  display: flex;
-  justify-content: space-evenly;
-}
-
-.admin-page-title {
-  width: 90%;
-  margin: auto;
-  padding-top: 10vh;
-  display: flex;
-}
-
-.table__container-top {
-  display: flex;
-  flex-direction: column;
-  width: 90%;
-  margin: auto;
-}
-
-.btn-create {
-  margin-bottom: 20px;
-  align-self: flex-start;
-  font-size: 20px;
-}
-
-/*Add Contact Container*/
 .hide {
   display: none;
 }
@@ -67,53 +29,6 @@ thead .table-hr {
   width: 100%;
 }
 
-.create-cont {
-  width: 100%;
-  background-color: #e6f4f1;
-  margin-bottom: 20px;
-}
-
-.form-cont {
-  margin-top: 20px;
-  margin-bottom: 20px;
-  display: flex;
-  flex-direction: column;
-}
-
-.form-cont form {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.form-group {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  justify-content: space-between;
-
-  & .contacts-input {
-    width: 170px;
-    margin-right: 5px;
-  }
-
-  & .contacts-input-check {
-    margin-left: 10px;
-  }
-}
-
-.btn-cont {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin-bottom: 0;
-  margin-right: 16px;
-}
-
-.checkbox-cont {
-  display: flex;
-}
-
 ::placeholder {
   font-size: 0.75em;
   font-style: italic;
@@ -121,142 +36,166 @@ thead .table-hr {
   color: rgb(204, 199, 199);
 }
 
-.form-group .input-item:focus {
-  outline: none;
-  border: #7ab6cb solid 2px;
-}
+// .form-cont form {
+//   display: flex;
+//   justify-content: space-between;
+//   align-items: center;
+// }
 
-.delete-btn::before {
-  content: "&#1F5D1";
-}
+///////////////////////////////////////////////////////////////////////
+//legacy css below: (needs to be striped)
+// .table-body-contacts td,
+// .table-body-contacts th {
+//   text-align: left;
+//   padding-left: 5px;
+//   font-size: 0.9em;
+//   max-height: 45px;
+// }
 
-.alert-message {
-  width: 30%;
-  text-align: start;
-  z-index: -10;
-}
+// thead .table-hr {
+//   text-align: left;
+// }
 
-input {
-  caret-color: red;
-}
+// .contacts__table {
+//   width: 90%;
+//   margin: auto;
+//   color: $dark-petrol;
+// }
 
-.table-row:nth-child(odd) {
-  background-color: $light-blue;
-}
+// .td-crud {
+//   display: flex;
+//   justify-content: space-evenly;
+// }
 
-/*EditContacts*/
+// .btn-create {
+//   margin-bottom: 20px;
+//   align-self: flex-start;
+//   font-size: 20px;
+// }
 
-.edit-contacts-modal {
-  margin-top: 20px;
-}
+// // .delete-btn::before {
+// //   content: "&#1F5D1";
+// // }
 
-.add-contact-btn-cont {
-  display: flex;
-  justify-content: space-between;
-}
+// // .alert-message {
+// //   width: 30%;
+// //   text-align: start;
+// //   z-index: -10;
+// // }
 
-.contact-edit-cont-btn {
-  display: flex;
-  justify-content: space-between;
-}
+// .table-row:nth-child(odd) {
+//   background-color: $light-blue;
+// }
 
-/*Export Contacts*/
+// /*EditContacts*/
 
-.btn-export {
-  background-color: $lesbotoc;
-}
+// .edit-contacts-modal {
+//   margin-top: 20px;
+// }
 
-/*for mobiles*/
+// .add-contact-btn-cont {
+//   display: flex;
+//   justify-content: space-between;
+// }
 
-@media (max-width: 600px) {
-  .btn-export {
-    display: none;
-  }
+// .contact-edit-cont-btn {
+//   display: flex;
+//   justify-content: space-between;
+// }
 
-  .admin-page-title {
-    padding-top: 40px;
-    padding-bottom: 40px;
-  }
+// /*Export Contacts*/
 
-  //Searchbar
-  .search-input {
-    max-width: fit-content;
-  }
+// .btn-export {
+//   background-color: $lesbotoc;
+// }
 
-  .edit-list {
-    max-width: 300px;
-    margin: auto;
-  }
+// /*for mobiles*/
 
-  .edit-list-item {
-    width: 100%;
-    margin: 5px;
-  }
+// @media (max-width: 600px) {
+//   .admin-page-title {
+//     padding-top: 40px;
+//     padding-bottom: 40px;
+//   }
 
-  .edit-list-item-email {
-    display: none;
-  }
+//   //Searchbar
+//   .search-input {
+//     max-width: fit-content;
+//   }
 
-  //AddContact
-  .btn-create {
-    margin-top: 20px;
-    font-size: 0.7em;
-  }
+//   .edit-list {
+//     max-width: 300px;
+//     margin: auto;
+//   }
 
-  .save-btn {
-    font-size: 0.7em;
-  }
+//   .edit-list-item {
+//     width: 100%;
+//     margin: 5px;
+//   }
 
-  .form-container form {
-    display: flex;
-    flex-direction: column;
+//   .edit-list-item-email {
+//     display: none;
+//   }
 
-    & label,
-    input {
-      font-size: 0.7em;
-    }
-  }
+//   //AddContact
+//   .btn-create {
+//     margin-top: 20px;
+//     font-size: 0.7em;
+//   }
 
-  .checkbox-cont {
-    display: flex;
-    align-items: flex-start;
-  }
+//   .save-btn {
+//     font-size: 0.7em;
+//   }
 
-  //ContactsList
-  .col-wherefrom,
-  .col-email,
-  .col-newsletter,
-  .col-age,
-  .col-updated,
-  .col-edit,
-  .td-wherefrom,
-  .td-email,
-  .td-newsletter,
-  .td-age,
-  .td-updated {
-    display: none;
-  }
+//   .form-container form {
+//     display: flex;
+//     flex-direction: column;
 
-  .contacts__table {
-    width: 350px;
-    font-size: 0.7em;
+//     & label,
+//     input {
+//       font-size: 0.7em;
+//     }
+//   }
 
-    & td {
-      padding: 0 5px;
-      height: 25px;
+//   .checkbox-cont {
+//     display: flex;
+//     align-items: flex-start;
+//   }
 
-      & button {
-        width: 20px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-      }
-    }
-  }
+//   //ContactsList
+//   .col-wherefrom,
+//   .col-email,
+//   .col-newsletter,
+//   .col-age,
+//   .col-updated,
+//   .col-edit,
+//   .td-wherefrom,
+//   .td-email,
+//   .td-newsletter,
+//   .td-age,
+//   .td-updated {
+//     display: none;
+//   }
 
-  //EditModal
-  .edit-button,
-  .edit-btn {
-    font-size: 0.7em;
-  }
-}
+//   .contacts__table {
+//     width: 350px;
+//     font-size: 0.7em;
+
+//     & td {
+//       padding: 0 5px;
+//       height: 25px;
+
+//       & button {
+//         width: 20px;
+//         display: flex;
+//         justify-content: center;
+//         align-items: center;
+//       }
+//     }
+//   }
+
+//   //EditModal
+//   .edit-button,
+//   .edit-btn {
+//     font-size: 0.7em;
+//   }
+// }

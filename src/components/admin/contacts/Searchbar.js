@@ -25,7 +25,7 @@ export default function Searchbar({ contacts }) {
   };
 
   return (
-    <section className="search-container container container-md">
+    <section className="w-50 container container-md mb-3">
       <div className="input-group mb-3">
         <input
           type="text"

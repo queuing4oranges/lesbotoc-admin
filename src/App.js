@@ -1,7 +1,7 @@
 import "./App.scss";
 import { Route, Routes, BrowserRouter } from "react-router-dom";
 import AdminLogin from "../src/components/admin/AdminLogin";
-import ContactsList from "../src/components/admin/contacts/ContactsList";
+import ContactsList from "./components/admin/contacts/ContactsLi";
 import Events from "../src/components/admin/events/Events";
 import EventsArchive from "../src/components/admin/events/EventsArchive";
 import ImageUpload from "../src/components/admin/pictures/ImageUpload";
@@ -14,7 +14,7 @@ function App() {
       <BrowserRouter basename="/">
         <Routes>
           <Route path="/" element={<AdminLogin />} />
-          <Route path="/contacts" element={<ContactsList />} />
+          {/* <Route path="/contacts" element={<ContactsList />} /> */}
           <Route path="/events" element={<Events />} />
           <Route path="/events/archive" element={<EventsArchive />} />
           <Route path="/pictures" element={<ImageUpload />} />
