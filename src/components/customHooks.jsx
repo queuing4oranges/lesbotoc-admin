@@ -1,6 +1,36 @@
 import { useState } from 'react'; 
 import axios from 'axios';
 import swal from 'sweetalert';
+import { useForm } from 'react-hook-form';
+
+//Contacts
+export function useGetContacts() {
+    const [ contacts, setContacts ] = useState([])
+    const [ loading, setLoading ] = useState(false)
+    const [ error, setError ] = useState(null)
+
+    // useEffect(() => {
+    const getContacts = async () => {
+        try {
+            setLoading(true)
+
+            const response = await axios.get("https://api2.queuing4oranges.com/contacts/read.php")
+            const data = await response.data;
+            setContacts(data);
+            setLoading(false);
+
+        } catch (error) {
+            setError(error);
+            setLoading(false);
+        }
+    };
+    // getContacts();
+    // }, [])
+
+  return {
+     contacts, loading, error, getContacts
+  }
+}
 
 export function useDeleteContact() {
     const [ deletedContact, setDeletedContact ] = useState(false);
@@ -40,34 +70,34 @@ export function useDeleteContact() {
     }
 }
 
-export function useGetContacts() {
-    const [ contacts, setContacts ] = useState([])
-    const [ loading, setLoading ] = useState(false)
-    const [ error, setError ] = useState(null)
+export function useAddContact() {
+  //register individ. inputs into the hook
+  const {
+    register,
+    handleSubmit,
+    reset, //resets form inputs to blank
+    formState: { errors },
+  } = useForm();
 
-    // useEffect(() => {
-    const getContacts = async () => {
-        try {
-            setLoading(true)
+  const onSubmit = async (data) => {
+    try {
+      const response = await axios.post(
+        "https://api2.queuing4oranges.com/contacts/create.php",
+        data
+      );
+      console.log(response.data.message);
+      swal("YEAH BABY!", "You added a new contact.", "success");
+    //   setContactAdded(true);
+      reset();
+    } catch (error) {
+      console.error("Error adding contact:", error);
+    }
+  };
 
-            const response = await axios.get("https://api2.queuing4oranges.com/contacts/read.php")
-            const data = await response.data;
-            setContacts(data);
-            setLoading(false);
-
-        } catch (error) {
-            setError(error);
-            setLoading(false);
-        }
-    };
-    // getContacts();
-    // }, [])
-
-  return {
-     contacts, loading, error, getContacts
-  }
+  return { register, handleSubmit, reset, errors, onSubmit };
 }
 
+//Events
 export function useGetEvents() {
     const [ events, setEvents ] = useState([])
     const [ loading, setLoading ] = useState(false)
@@ -98,6 +128,32 @@ export function useGetEvents() {
   } 
 }
 
+export function useShowEvent() {
+    const [ oneEvent, setOneEvent ] = useState([])
+    const [ loading, setLoading ] = useState(false)
+    const [ error, setError ] = useState(null)
+
+
+    const showEvent = async (id) => {
+    try {
+        setLoading(true)
+        const response = await axios.get(`https://api2.queuing4oranges.com/events/single_read.php/${id}`)
+        const data = response.data;
+
+        setOneEvent(data)
+        setLoading(false)
+    } catch (error){
+        setError(error)
+        setLoading(false)
+    }
+    };
+
+    return {
+        oneEvent, loading, error, showEvent
+    }
+}
+
+//Images
 export function useGetImages() {
     const [ images, setImages ] = useState([])
     const [ loading, setLoading ] = useState(false)
@@ -125,53 +181,3 @@ export function useGetImages() {
         images, loading, error, getImages
     }
 };
-
-export function useShowContact() {
-    const [ oneContact, setOneContact ] = useState([])
-    const [ loading, setLoading ] = useState(false)
-    const [ error, setError ] = useState(null)
-    const [ shownContact, setShownContact ] = useState(false)
-
-
-    const showContact = async (id) => {
-    try {
-        setLoading(true)
-        const response = await axios.get(`https://api2.queuing4oranges.com/contacts/single_read.php/${id}`)
-        const data = response.data;
-        setOneContact(data)
-        setLoading(false)
-    } catch (error){
-        setError(error)
-        setLoading(false)
-    }
-    };
-
-    return {
-        oneContact, loading, error, showContact, setShownContact
-    }
-}
-
-export function useShowEvent() {
-    const [ oneEvent, setOneEvent ] = useState([])
-    const [ loading, setLoading ] = useState(false)
-    const [ error, setError ] = useState(null)
-
-
-    const showEvent = async (id) => {
-    try {
-        setLoading(true)
-        const response = await axios.get(`https://api2.queuing4oranges.com/events/single_read.php/${id}`)
-        const data = response.data;
-
-        setOneEvent(data)
-        setLoading(false)
-    } catch (error){
-        setError(error)
-        setLoading(false)
-    }
-    };
-
-    return {
-        oneEvent, loading, error, showEvent
-    }
-}
