@@ -4,8 +4,7 @@ import Moment from "react-moment";
 //icons
 import { BsPencilSquare, BsTrash } from "react-icons/bs";
 
-import useDeleteContact from "../../hooks/useDeleteContact";
-import useGetContacts from "../../hooks/useGetContacts";
+import { useDeleteContact, useGetContacts } from "../../customHooks";
 
 export default function ContactsList({ contact }) {
   const { name, wherefrom, email, phone, newsletter, age, updated_at, id } =
@@ -13,10 +12,6 @@ export default function ContactsList({ contact }) {
   const { deletedContact, setDeletecContact, loading, error, deleteContact } =
     useDeleteContact();
   const { getContacts } = useGetContacts();
-
-  useEffect(() => {
-    getContacts();
-  }, [deletedContact]);
 
   return (
     <>

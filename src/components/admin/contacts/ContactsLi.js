@@ -14,8 +14,7 @@ import ReportBug from "../../includes/ReportBug";
 import Trash from "../../../assets/svg-icons/Trash";
 import { PenIcon } from "../../../assets/SvgIcons";
 //hooks
-import useGetContacts from "../../hooks/useGetContacts";
-import useDeleteContact from "../../hooks/useDeleteContact";
+import { useGetContacts, useDeleteContact } from "../../customHooks";
 import useShowContact from "../../hooks/useShowContact";
 
 export default function ContactsList() {

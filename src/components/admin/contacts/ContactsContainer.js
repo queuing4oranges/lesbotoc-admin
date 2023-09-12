@@ -1,39 +1,56 @@
 import React, { useState, useEffect } from "react";
 import { CSVLink } from "react-csv";
+import { useForm } from "react-hook-form";
+import axios from "axios";
+import swal from "sweetalert";
 
 //hooks
-import useGetContacts from "../../hooks/useGetContacts";
-import useShowContact from "../../hooks/useShowContact";
+import { useGetContacts } from "../../customHooks";
 import AdminNavbar from "../AdminNavbar";
 import Searchbar from "./Searchbar";
-import AddContact from "./AddContact";
 import ContactsList from "./ContactsList";
 import TableHead from "./TableHead";
 
+import AddContact from "./AddContact";
+
 export default function ContactsContainer() {
-  //custom hooks
-  const { contacts, loading, error, getContacts } = useGetContacts();
+  const { contacts, loading, error, getContacts, setContacts } =
+    useGetContacts();
+  const { success, setSuccess } = useState(false);
 
   const [isOpen, setIsOpen] = useState(false);
-  const [contactAdded, setContactAdded] = useState(false);
   const [buttonText, setButtonText] = useState("Add Contact");
+  const {
+    register,
+    handleSubmit,
+    reset, //resets form inputs to blank
+    formState: { errors },
+  } = useForm();
 
-  //   const { deletedContact, setDeletedContact, deleteContact } =
-  //     useDeleteContact();
-  //   const { oneContact, showContact } = useShowContact();
-
-  console.log(contacts);
-
+  //getting all contacts on first render
   useEffect(() => {
     getContacts();
-  }, [contactAdded]);
+  }, [success]);
 
+  //adding a contact
   useEffect(() => {
     isOpen ? setButtonText("Cancel") : setButtonText("Add Contact");
   }, [isOpen]);
 
-  const openModal = () => {
-    setIsOpen(!isOpen);
+  const addContact = async (data) => {
+    try {
+      const response = await axios.post(
+        "https://api2.queuing4oranges.com/contacts/create.php",
+        data
+      );
+      getContacts();
+      console.log(response.data.message);
+      swal("YEAH BABY!", "You added a new contact.", "success");
+      reset();
+      setIsOpen(!isOpen);
+    } catch (error) {
+      console.error("Error adding contact:", error);
+    }
   };
 
   if (loading) {
@@ -44,6 +61,11 @@ export default function ContactsContainer() {
     <div>Couldn't retrieve data.</div>;
     console.log(error);
   }
+
+  const openModal = () => {
+    setIsOpen(!isOpen);
+    reset();
+  };
 
   return (
     <>
@@ -64,7 +86,7 @@ export default function ContactsContainer() {
         >
           <div className="btn-group" role="group" aria-label="First group">
             <button
-              onClick={() => openModal()}
+              onClick={openModal}
               className="btn btn-success btn-create btn-sm"
             >
               {buttonText}
@@ -81,7 +103,17 @@ export default function ContactsContainer() {
         </div>
 
         {/* adding a contact */}
-        <div>{isOpen && <AddContact setContactAdded={setContactAdded} />}</div>
+        <div>
+          {isOpen && (
+            <AddContact
+              register={register}
+              handleSubmit={handleSubmit}
+              reset={reset}
+              errors={errors}
+              addContact={addContact}
+            />
+          )}
+        </div>
 
         {/* list of contacts */}
         <div className="container w-90 mx-auto p-0">

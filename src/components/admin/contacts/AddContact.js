@@ -1,33 +1,12 @@
-import React, { useState } from "react";
-import axios from "axios";
-import swal from "sweetalert";
-import { useForm } from "react-hook-form";
+import React from "react";
 import { ageGroups, wherefromPlaces } from "../Datalists";
 
-export default function AddContact({ setContactAdded }) {
-  //register individ. inputs into the hook
-  const {
-    register,
-    handleSubmit,
-    reset, //resets form inputs to blank
-    formState: { errors },
-  } = useForm();
-
-  const onSubmit = async (data) => {
-    try {
-      const response = await axios.post(
-        "https://api2.queuing4oranges.com/contacts/create.php",
-        data
-      );
-      console.log(response.data.message);
-      swal("YEAH BABY!", "You added a new contact.", "success");
-      setContactAdded(true);
-      reset();
-    } catch (error) {
-      console.error("Error adding contact:", error);
-    }
-  };
-
+export default function AddContact({
+  register,
+  handleSubmit,
+  errors,
+  addContact,
+}) {
   return (
     <section className="add-container container">
       {errors && (
@@ -41,7 +20,7 @@ export default function AddContact({ setContactAdded }) {
         </div>
       )}
       <div className="form-cont mt-1">
-        <form onSubmit={handleSubmit(onSubmit)} className="p-3">
+        <form onSubmit={handleSubmit(addContact)} className="p-3">
           <div className="col-md-6">
             <div className="form-group">
               <label htmlFor="name">Name*</label>

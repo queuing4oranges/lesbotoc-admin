@@ -1,4 +1,4 @@
-import { useState } from 'react'; 
+import { useEffect, useState } from 'react'; 
 import axios from 'axios';
 import swal from 'sweetalert';
 import { useForm } from 'react-hook-form';
@@ -9,11 +9,9 @@ export function useGetContacts() {
     const [ loading, setLoading ] = useState(false)
     const [ error, setError ] = useState(null)
 
-    // useEffect(() => {
     const getContacts = async () => {
         try {
             setLoading(true)
-
             const response = await axios.get("https://api2.queuing4oranges.com/contacts/read.php")
             const data = await response.data;
             setContacts(data);
@@ -24,11 +22,9 @@ export function useGetContacts() {
             setLoading(false);
         }
     };
-    // getContacts();
-    // }, [])
 
   return {
-     contacts, loading, error, getContacts
+     contacts, loading, error, getContacts, setContacts
   }
 }
 
@@ -70,32 +66,32 @@ export function useDeleteContact() {
     }
 }
 
-export function useAddContact() {
-  //register individ. inputs into the hook
-  const {
-    register,
-    handleSubmit,
-    reset, //resets form inputs to blank
-    formState: { errors },
-  } = useForm();
+// export function useAddContact() {
+//     //register individ. inputs into the hook
+//     const [contactAdded, setContactAdded] = useState(false)
+//     const {
+//         register,
+//         handleSubmit,
+//         reset, //resets form inputs to blank
+//         formState: { errors },
+//     } = useForm();
 
-  const onSubmit = async (data) => {
-    try {
-      const response = await axios.post(
-        "https://api2.queuing4oranges.com/contacts/create.php",
-        data
-      );
-      console.log(response.data.message);
-      swal("YEAH BABY!", "You added a new contact.", "success");
-    //   setContactAdded(true);
-      reset();
-    } catch (error) {
-      console.error("Error adding contact:", error);
-    }
-  };
+//     const addContact = async (data) => {
+//         try {
+//         const response = await axios.post(
+//             "https://api2.queuing4oranges.com/contacts/create.php",
+//             data
+//         );
+//         console.log(response.data.message);
+//         swal("YEAH BABY!", "You added a new contact.", "success");
+//         setContactAdded(true)
+//         } catch (error) {
+//         console.error("Error adding contact:", error);
+//         }
+//     };
 
-  return { register, handleSubmit, reset, errors, onSubmit };
-}
+//     return { register, handleSubmit, reset, errors, addContact, contactAdded };
+//     }
 
 //Events
 export function useGetEvents() {
