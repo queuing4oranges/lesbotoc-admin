@@ -29,9 +29,8 @@ export default function ContactsList({ contact }) {
             <Moment format="D. MMMM YYYY">{updated_at}</Moment>
           )}
         </td>
-        <td className="td td-crud">
+        <td className="td td-crud d-flex justify-content-between">
           {/* Editing a contact */}
-
           <button
             //   onClick={() => showContact(contact.id)}
             type="button"

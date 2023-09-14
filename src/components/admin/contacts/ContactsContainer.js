@@ -14,8 +14,7 @@ import TableHead from "./TableHead";
 import AddContact from "./AddContact";
 
 export default function ContactsContainer() {
-  const { contacts, loading, error, getContacts, setContacts } =
-    useGetContacts();
+  const { contacts, loading, error, getContacts } = useGetContacts();
   const { success, setSuccess } = useState(false);
 
   const [isOpen, setIsOpen] = useState(false);
@@ -62,11 +61,6 @@ export default function ContactsContainer() {
     console.log(error);
   }
 
-  const openModal = () => {
-    setIsOpen(!isOpen);
-    reset();
-  };
-
   return (
     <>
       <AdminNavbar className="w-100" />
@@ -86,10 +80,13 @@ export default function ContactsContainer() {
         >
           <div className="btn-group" role="group" aria-label="First group">
             <button
-              onClick={openModal}
-              className="btn btn-success btn-create btn-sm"
+              type="button"
+              className="btn btn-success btn-sm"
+              data-bs-toggle="modal"
+              data-bs-target="#staticBackdrop"
+              onClick={() => reset()}
             >
-              {buttonText}
+              Add Contact
             </button>
           </div>
 
@@ -102,20 +99,24 @@ export default function ContactsContainer() {
           </div>
         </div>
 
-        {/* adding a contact */}
-        <div>
-          {isOpen && (
-            <AddContact
-              register={register}
-              handleSubmit={handleSubmit}
-              reset={reset}
-              errors={errors}
-              addContact={addContact}
-            />
-          )}
+        <div
+          className="modal fade"
+          id="staticBackdrop"
+          data-bs-backdrop="static"
+          data-bs-keyboard="false"
+          tabIndex="-1"
+          aria-labelledby="staticBackdropLabel"
+          aria-hidden="true"
+        >
+          <AddContact
+            register={register}
+            handleSubmit={handleSubmit}
+            reset={reset}
+            errors={errors}
+            addContact={addContact}
+          />
         </div>
 
-        {/* list of contacts */}
         <div className="container w-90 mx-auto p-0">
           <table
             className="table table-sm table-bordered table-hover mt-3"
