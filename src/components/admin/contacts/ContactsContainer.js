@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { CSVLink } from "react-csv";
-import { useForm } from "react-hook-form";
+import { get, useForm } from "react-hook-form";
 import axios from "axios";
 import swal from "sweetalert";
 
 //hooks
-import { useGetContacts } from "../../customHooks";
+import { useDeleteContact, useGetContacts } from "../../customHooks";
 import AdminNavbar from "../AdminNavbar";
 import Searchbar from "./Searchbar";
 import ContactsList from "./ContactsList";
@@ -14,8 +14,11 @@ import TableHead from "./TableHead";
 import AddContact from "./AddContact";
 
 export default function ContactsContainer() {
-  const { contacts, loading, error, getContacts } = useGetContacts();
+  const { contacts, loading, error, getContacts, setContacts } =
+    useGetContacts();
   const { success, setSuccess } = useState(false);
+  const { deletedContact, setDeletedContact, deleteContact } =
+    useDeleteContact();
 
   const [isOpen, setIsOpen] = useState(false);
   const [buttonText, setButtonText] = useState("Add Contact");
@@ -31,10 +34,7 @@ export default function ContactsContainer() {
     getContacts();
   }, [success]);
 
-  //adding a contact
-  useEffect(() => {
-    isOpen ? setButtonText("Cancel") : setButtonText("Add Contact");
-  }, [isOpen]);
+  //adding a contact TODO: modal doesnt close!
 
   const addContact = async (data) => {
     try {
@@ -46,10 +46,17 @@ export default function ContactsContainer() {
       console.log(response.data.message);
       swal("YEAH BABY!", "You added a new contact.", "success");
       reset();
-      setIsOpen(!isOpen);
     } catch (error) {
       console.error("Error adding contact:", error);
     }
+  };
+
+  //deleting a contact
+  const handleContactDelete = (id) => {
+    //TODO: async???
+    deleteContact(id);
+    const newContacts = getContacts();
+    setContacts(newContacts);
   };
 
   if (loading) {
@@ -84,7 +91,6 @@ export default function ContactsContainer() {
               className="btn btn-success btn-sm"
               data-bs-toggle="modal"
               data-bs-target="#staticBackdrop"
-              onClick={() => reset()}
             >
               Add Contact
             </button>
@@ -125,7 +131,12 @@ export default function ContactsContainer() {
             <TableHead />
             <tbody className="table-body table-body-contacts">
               {contacts &&
-                contacts.map((contact) => <ContactsList contact={contact} />)}
+                contacts.map((contact) => (
+                  <ContactsList
+                    contact={contact}
+                    handleContactDelete={handleContactDelete}
+                  />
+                ))}
             </tbody>
           </table>
         </div>

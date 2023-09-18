@@ -6,12 +6,16 @@ import { BsPencilSquare, BsTrash } from "react-icons/bs";
 
 import { useDeleteContact, useGetContacts } from "../../customHooks";
 
-export default function ContactsList({ contact }) {
+export default function ContactsList({ contact, handleContactDelete }) {
   const { name, wherefrom, email, phone, newsletter, age, updated_at, id } =
     contact;
   const { deletedContact, setDeletecContact, loading, error, deleteContact } =
     useDeleteContact();
   const { getContacts } = useGetContacts();
+
+  const handleDelete = (id) => {
+    handleContactDelete(id);
+  };
 
   return (
     <>
@@ -43,7 +47,7 @@ export default function ContactsList({ contact }) {
           <button
             type="button"
             className="btn btn-danger btn-sm"
-            onClick={() => deleteContact(id)}
+            onClick={() => handleDelete(id)}
           >
             <BsTrash />
           </button>

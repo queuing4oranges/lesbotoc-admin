@@ -66,33 +66,6 @@ export function useDeleteContact() {
     }
 }
 
-// export function useAddContact() {
-//     //register individ. inputs into the hook
-//     const [contactAdded, setContactAdded] = useState(false)
-//     const {
-//         register,
-//         handleSubmit,
-//         reset, //resets form inputs to blank
-//         formState: { errors },
-//     } = useForm();
-
-//     const addContact = async (data) => {
-//         try {
-//         const response = await axios.post(
-//             "https://api2.queuing4oranges.com/contacts/create.php",
-//             data
-//         );
-//         console.log(response.data.message);
-//         swal("YEAH BABY!", "You added a new contact.", "success");
-//         setContactAdded(true)
-//         } catch (error) {
-//         console.error("Error adding contact:", error);
-//         }
-//     };
-
-//     return { register, handleSubmit, reset, errors, addContact, contactAdded };
-//     }
-
 //Events
 export function useGetEvents() {
     const [ events, setEvents ] = useState([])

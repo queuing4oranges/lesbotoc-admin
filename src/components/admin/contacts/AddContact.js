@@ -137,7 +137,11 @@ export default function AddContact({
                   <a className="btn btn-warning" data-bs-dismiss="modal">
                     Cancel
                   </a>
-                  <button className="btn btn-success save-btn" type="submit">
+                  <button
+                    data-bs-dismiss="modal"
+                    className="btn btn-success save-btn"
+                    type="submit"
+                  >
                     Save
                   </button>
                 </div>
