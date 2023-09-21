@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { ageGroups, wherefromPlaces } from "../Datalists";
 import { CSVLink } from "react-csv";
 import { get, useForm } from "react-hook-form";
 import axios from "axios";
@@ -11,17 +12,14 @@ import Searchbar from "./Searchbar";
 import ContactsList from "./ContactsList";
 import TableHead from "./TableHead";
 
-import AddContact from "./AddContact";
-
 export default function ContactsContainer() {
   const { contacts, loading, error, getContacts, setContacts } =
     useGetContacts();
   const { success, setSuccess } = useState(false);
   const { deletedContact, setDeletedContact, deleteContact } =
     useDeleteContact();
+  const [modalOpen, setModalOpen] = useState(false);
 
-  const [isOpen, setIsOpen] = useState(false);
-  const [buttonText, setButtonText] = useState("Add Contact");
   const {
     register,
     handleSubmit,
@@ -42,13 +40,17 @@ export default function ContactsContainer() {
         "https://api2.queuing4oranges.com/contacts/create.php",
         data
       );
-      getContacts();
-      console.log(response.data.message);
-      swal("YEAH BABY!", "You added a new contact.", "success");
-      reset();
+      if (response.status === 200) {
+        swal("YEAH BABY!", "You added a new contact.", "success");
+        reset();
+        getContacts();
+      } else {
+        console.log("something went wrong");
+      }
     } catch (error) {
       console.error("Error adding contact:", error);
     }
+    setModalOpen(false);
   };
 
   //deleting a contact
@@ -90,7 +92,7 @@ export default function ContactsContainer() {
               type="button"
               className="btn btn-success btn-sm"
               data-bs-toggle="modal"
-              data-bs-target="#staticBackdrop"
+              data-bs-target="#contact-modal"
             >
               Add Contact
             </button>
@@ -103,24 +105,6 @@ export default function ContactsContainer() {
               </button>
             </CSVLink>
           </div>
-        </div>
-
-        <div
-          className="modal fade"
-          id="staticBackdrop"
-          data-bs-backdrop="static"
-          data-bs-keyboard="false"
-          tabIndex="-1"
-          aria-labelledby="staticBackdropLabel"
-          aria-hidden="true"
-        >
-          <AddContact
-            register={register}
-            handleSubmit={handleSubmit}
-            reset={reset}
-            errors={errors}
-            addContact={addContact}
-          />
         </div>
 
         <div className="container w-90 mx-auto p-0">
@@ -139,6 +123,145 @@ export default function ContactsContainer() {
                 ))}
             </tbody>
           </table>
+        </div>
+      </div>
+
+      {/* this is the modal container */}
+
+      <div className="modal fade" tabIndex="-1" id="contact-modal">
+        <div className="modal-dialog modal-dialog-centered">
+          <div className="modal-content">
+            <div className="modal-header  d-flex flex-column pb-3 align-items-center">
+              <h1 className="modal-title">Add a Contact</h1>
+            </div>
+
+            {/* </div>
+              {errors ? (
+                <div>
+                  {errors.name && (
+                    <p className="alert alert-info py-0">
+                      {errors.name?.message}
+                    </p>
+                  )}
+                  {errors.email && (
+                    <p className="alert alert-info py-0">
+                      {errors.email?.message}
+                    </p>
+                  )}
+                </div>
+              ) : null}
+              </div> */}
+
+            <div className="modal-body">
+              <form onSubmit={handleSubmit(addContact)} className="p-3">
+                <div className="form-group mx-1 mb-3 form-floating">
+                  <input
+                    id="name"
+                    className="form-control"
+                    placeholder="first name / last name / nickname"
+                    type="text"
+                    {...register("name", {
+                      required: "Please add a name.",
+                    })}
+                  />
+                  <label htmlFor="name">Name*</label>
+                </div>
+
+                <div className="form-group mx-1 mb-3 form-floating">
+                  <input
+                    id="wherefrom"
+                    className="form-control"
+                    placeholder="Where did we meet?"
+                    type="text"
+                    list="places"
+                    {...register("wherefrom")}
+                  />
+                  <label htmlFor="wherefrom">Where did we meet?</label>
+                  <datalist id="places">
+                    {wherefromPlaces.map((item) => (
+                      <option key={item.id} value={item.place}></option>
+                    ))}
+                  </datalist>
+                </div>
+
+                <div className="form-group mx-1 mb-3 form-floating">
+                  <input
+                    id="email"
+                    className="form-control"
+                    placeholder="someone@email.cz"
+                    type="email"
+                    {...register("email", {
+                      validate: {
+                        matchPattern: (v) =>
+                          /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(
+                            v
+                          ) || "Email must be a valid address",
+                      },
+                      required: "Please add an email address.",
+                    })}
+                  />
+                  <label htmlFor="email">Email*</label>
+                </div>
+
+                <div className="form-group px-1 mb-3 form-floating">
+                  <input
+                    id="phone"
+                    placeholder="Phone"
+                    className="form-control"
+                    type="text"
+                    {...register("phone")}
+                  />
+                  <label htmlFor="phone">Phone</label>
+                </div>
+
+                <div className="form-group d-flex flex-column mb-3 form-floating">
+                  <input
+                    id="age"
+                    placeholder="Age"
+                    className="form-control"
+                    list="ages"
+                    type="text"
+                    {...register("age")}
+                  />
+                  <label htmlFor="age">Age Group</label>
+
+                  <datalist id="ages">
+                    {ageGroups.map((item) => (
+                      <option key={item.id} value={item.age}></option>
+                    ))}
+                  </datalist>
+                </div>
+
+                <div className="form-check ms-n3 d-flex align-items-center justify-content-center text center">
+                  <input
+                    className="form-check-input mt-3 ms-3"
+                    type="checkbox"
+                    {...register("newsletter")}
+                  />
+                  <label
+                    htmlFor="newsletter"
+                    className="form-check-label ms-3 mt-3 mb-3"
+                  >
+                    Newsletter?
+                  </label>
+                </div>
+
+                {/* <div className="modal-footer"> */}
+                <button
+                  type="button"
+                  class="btn btn-warning"
+                  onClick={() => reset()}
+                  data-bs-dismiss="modal"
+                >
+                  Close
+                </button>
+                <button className="btn btn-success" type="submit">
+                  Save
+                </button>
+                {/* </div> */}
+              </form>
+            </div>
+          </div>
         </div>
       </div>
     </>
