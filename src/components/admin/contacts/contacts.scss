@@ -4,36 +4,47 @@
 
 /***SEARCHBAR.JS***/
 .edit-list:nth-child(odd) {
-  background-color: #e6f4f1;
+	background-color: #e6f4f1;
 }
 
 .search-input input {
-  width: 100%;
+	width: 100%;
 }
 
 /***ADDCONTACT.JS***/
 .add-container {
-  font-size: 0.8rem;
+	font-size: 0.8rem;
 }
 
 .form-cont {
-  background-color: rgb(248, 247, 247);
-}
-
-.hide {
-  display: none;
-}
-
-.show {
-  display: block;
-  width: 100%;
+	background-color: rgb(248, 247, 247);
 }
 
 ::placeholder {
-  font-size: 0.75em;
-  font-style: italic;
-  font-weight: 400;
-  color: rgb(204, 199, 199);
+	font-size: 0.75em;
+	font-style: italic;
+	font-weight: 400;
+	color: rgb(204, 199, 199);
+}
+
+//modal styling
+.contact-form .form-group {
+	& label {
+		padding-top: 1%;
+		padding-left: 2%;
+		font-size: 12px;
+		color: $lesbotoc;
+	}
+	& input {
+		height: calc(1.5rem + 20px);
+	}
+}
+
+.error-container {
+	min-height: 70px;
+}
+.contact-errors p {
+	font-size: 0.75rem;
 }
 
 // .form-cont form {

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { ageGroups, wherefromPlaces } from "../Datalists";
 import { CSVLink } from "react-csv";
 import { get, useForm } from "react-hook-form";
@@ -18,8 +18,7 @@ export default function ContactsContainer() {
   const { success, setSuccess } = useState(false);
   const { deletedContact, setDeletedContact, deleteContact } =
     useDeleteContact();
-  const [modalOpen, setModalOpen] = useState(false);
-
+	
   const {
     register,
     handleSubmit,
@@ -44,14 +43,19 @@ export default function ContactsContainer() {
         swal("YEAH BABY!", "You added a new contact.", "success");
         reset();
         getContacts();
+		handleCloseModal()
       } else {
         console.log("something went wrong");
       }
     } catch (error) {
       console.error("Error adding contact:", error);
     }
-    setModalOpen(false);
+	
   };
+  
+  const handleCloseModal = () => {
+	document.body.focus()
+  }
 
   //deleting a contact
   const handleContactDelete = (id) => {
@@ -88,14 +92,15 @@ export default function ContactsContainer() {
           aria-label="Toolbar with button groups"
         >
           <div className="btn-group" role="group" aria-label="First group">
-            <button
+			{/* using anchor instead of btn to trap focus on body instead back to btn */}
+            <a
               type="button"
               className="btn btn-success btn-sm"
               data-bs-toggle="modal"
               data-bs-target="#contact-modal"
             >
               Add Contact
-            </button>
+            </a>
           </div>
 
           <div className="btn-group" role="group" aria-label="Second group">
@@ -128,32 +133,33 @@ export default function ContactsContainer() {
 
       {/* this is the modal container */}
 
-      <div className="modal fade" tabIndex="-1" id="contact-modal">
+      <div className="modal fade" tabIndex="-1" id="contact-modal" data-bs-backdrop="static" data-bs-keyboard="false">
         <div className="modal-dialog modal-dialog-centered">
           <div className="modal-content">
             <div className="modal-header  d-flex flex-column pb-3 align-items-center">
-              <h1 className="modal-title">Add a Contact</h1>
-            </div>
+              <h5 className="modal-title">Add a Contact</h5>
 
-            {/* </div>
               {errors ? (
-                <div>
+                <div className="contact-errors">
                   {errors.name && (
-                    <p className="alert alert-info py-0">
+                    <p className="alert alert-danger py-0">
                       {errors.name?.message}
                     </p>
                   )}
                   {errors.email && (
-                    <p className="alert alert-info py-0">
+                    <p className="alert alert-danger py-0">
                       {errors.email?.message}
                     </p>
                   )}
                 </div>
               ) : null}
-              </div> */}
+            </div>
 
             <div className="modal-body">
-              <form onSubmit={handleSubmit(addContact)} className="p-3">
+              <form
+                onSubmit={handleSubmit(addContact)}
+                className=" contact-form p-3"
+              >
                 <div className="form-group mx-1 mb-3 form-floating">
                   <input
                     id="name"
@@ -214,7 +220,7 @@ export default function ContactsContainer() {
                   <label htmlFor="phone">Phone</label>
                 </div>
 
-                <div className="form-group d-flex flex-column mb-3 form-floating">
+                <div className="form-group px-1 form-floating">
                   <input
                     id="age"
                     placeholder="Age"
@@ -232,33 +238,33 @@ export default function ContactsContainer() {
                   </datalist>
                 </div>
 
-                <div className="form-check ms-n3 d-flex align-items-center justify-content-center text center">
+                <div className="form-check d-flex align-items-center justify-content-start">
                   <input
-                    className="form-check-input mt-3 ms-3"
+                    className="form-check-input"
                     type="checkbox"
                     {...register("newsletter")}
                   />
                   <label
                     htmlFor="newsletter"
-                    className="form-check-label ms-3 mt-3 mb-3"
+                    className="form-check-label ms-2 mt-2"
                   >
                     Newsletter?
                   </label>
                 </div>
 
-                {/* <div className="modal-footer"> */}
+                <div className="modal-footer">
                 <button
                   type="button"
-                  class="btn btn-warning"
+                  className="btn btn-warning"
                   onClick={() => reset()}
                   data-bs-dismiss="modal"
                 >
                   Close
                 </button>
-                <button className="btn btn-success" type="submit">
+                <button className="btn btn-success" type="submit" data-bs-dismiss="modal">
                   Save
                 </button>
-                {/* </div> */}
+                </div>
               </form>
             </div>
           </div>
