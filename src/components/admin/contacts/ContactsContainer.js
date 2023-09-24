@@ -33,29 +33,24 @@ export default function ContactsContainer() {
 
   //adding a contact TODO: modal doesnt close!
 
-  const addContact = async (data) => {
-    try {
-      const response = await axios.post(
-        "https://api2.queuing4oranges.com/contacts/create.php",
-        data
-      );
-      if (response.status === 200) {
-        swal("YEAH BABY!", "You added a new contact.", "success");
-        reset();
-        getContacts();
-		handleCloseModal()
-      } else {
-        console.log("something went wrong");
-      }
-    } catch (error) {
-      console.error("Error adding contact:", error);
-    }
-	
-  };
-  
-  const handleCloseModal = () => {
-	document.body.focus()
-  }
+	const addContact = async (data) => {
+		try {
+			const response = await axios.post(
+			"https://api2.queuing4oranges.com/contacts/create.php",
+			data
+			);
+
+			if (response.status === 200) {
+				swal("YEAH BABY!", "You added a new contact.", "success");
+				getContacts();
+			} else {
+				console.log("something went wrong");
+			}
+		} catch (error) {
+			console.error("Error adding contact:", error);
+		}
+		reset();
+	};
 
   //deleting a contact
   const handleContactDelete = (id) => {
