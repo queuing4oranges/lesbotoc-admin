@@ -111,11 +111,11 @@ export default function ContactsContainer() {
 
 		<div className="container w-90 mx-auto p-0">
 			<table
-				className="table table-sm table-bordered table-hover mt-3"
+				className="table table-sm table-bordered mt-3"
 				id="contacts-table"
 			>
 				<TableHead />
-				<tbody className="table-body table-body-contacts">
+				<tbody className="table-body">
 					{contacts &&
 						contacts.map((contact) => (
 							<ContactsList

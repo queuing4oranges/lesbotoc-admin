@@ -190,7 +190,7 @@ export default function ContactsList() {
               </tr>
             </thead>
 
-            <tbody className="table-body table-body-contacts">
+            <tbody className="table-body table-hover">
               {contacts.map((contact, key) => (
                 <tr className="table-row" key={key}>
                   <td className="td td-name">{contact.name}</td>
