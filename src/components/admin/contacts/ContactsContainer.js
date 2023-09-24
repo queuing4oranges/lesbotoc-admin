@@ -63,6 +63,9 @@ export default function ContactsContainer() {
 			getContacts();
 		}
 	}, [deletedContact])
+	
+	//editing a contact
+	
 
 	if (loading) {
 		<div>Crunching your data.</div>;
