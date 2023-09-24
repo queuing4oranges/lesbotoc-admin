@@ -162,7 +162,7 @@ export default function ContactsList() {
       {contacts && (
         <div className="table__container-bottom">
           <table
-            className="table table-sm table-bordered contacts__table table-hover"
+            className="table table-sm table-bordered table-hover"
             id="contacts-table"
           >
             <thead>
@@ -190,7 +190,7 @@ export default function ContactsList() {
               </tr>
             </thead>
 
-            <tbody className="table-body table-hover">
+            <tbody className="table-body">
               {contacts.map((contact, key) => (
                 <tr className="table-row" key={key}>
                   <td className="td td-name">{contact.name}</td>

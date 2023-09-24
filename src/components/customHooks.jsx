@@ -34,6 +34,7 @@ export function useDeleteContact() {
     const [ error, setError ] = useState();
 
     const deleteContact = (id) => {
+		setDeletedContact(false)
         swal({
         title: "Sure?",
         text: "Do you REALLY want to delete this precious contact?",

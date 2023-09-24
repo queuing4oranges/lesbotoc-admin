@@ -36,13 +36,31 @@
 .table-row:nth-child(odd) {
   background-color: $light-blue;
 }
-///////////////////////////////////////////////////////////////////////
-//legacy css below: (needs to be striped)
-
 
 thead .table-hr {
   text-align: left;
 }
+
+//responsive
+@media (max-width: 600px) {
+  .col-wherefrom,
+  .col-email,
+  .col-newsletter,
+  .col-age,
+  .col-updated,
+  .col-edit,
+  .td-wherefrom,
+  .td-email,
+  .td-newsletter,
+  .td-age,
+  .td-updated {
+    display: none;
+  }
+}
+///////////////////////////////////////////////////////////////////////
+//legacy css below: (needs to be striped)
+
+
 
 
 // /*EditContacts*/
@@ -63,7 +81,7 @@ thead .table-hr {
 
 // /*for mobiles*/
 
-@media (max-width: 600px) {
+// @media (max-width: 600px) {
 
 //   .edit-list {
 //     max-width: 300px;
@@ -78,23 +96,6 @@ thead .table-hr {
 //   .edit-list-item-email {
 //     display: none;
 //   }
-
-
-  //ContactsList
-  .col-wherefrom,
-  .col-email,
-  .col-newsletter,
-  .col-age,
-  .col-updated,
-  .col-edit,
-  .td-wherefrom,
-  .td-email,
-  .td-newsletter,
-  .td-age,
-  .td-updated {
-    display: none;
-  }
-}
 
 //   .contacts__table {
 //     width: 350px;

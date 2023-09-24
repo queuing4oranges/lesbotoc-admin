@@ -1,7 +1,7 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import { ageGroups, wherefromPlaces } from "../Datalists";
 import { CSVLink } from "react-csv";
-import { get, useForm } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import axios from "axios";
 import swal from "sweetalert";
 
@@ -11,28 +11,27 @@ import AdminNavbar from "../AdminNavbar";
 import Searchbar from "./Searchbar";
 import ContactsList from "./ContactsList";
 import TableHead from "./TableHead";
+import ReportBug from "../../includes/ReportBug";
 
 export default function ContactsContainer() {
-	const { contacts, loading, error, getContacts, setContacts }=useGetContacts();
-	const { deletedContact, setDeletedContact, deleteContact }=useDeleteContact();	
+	const { contacts, loading, error, getContacts }=useGetContacts();
+	const { deletedContact, deleteContact }=useDeleteContact();	
 	
-	const [success, setSuccess]=useState(false);
 	const [openModal, setOpenModal]=useState(false);
-	
-  const {
-    register,
-    handleSubmit,
-    reset, //resets form inputs to blank
-    formState: { errors },
-  } = useForm();
 
-  //getting all contacts on first render
-  useEffect(() => {
-    getContacts();
-  }, []);
+	const {
+		register,
+		handleSubmit,
+		reset, //resets form inputs to blank
+		formState: { errors },
+		} = useForm();
 
-  //adding a contact TODO: modal doesnt close!
+	//getting all contacts on page load
+	useEffect(() => {
+		getContacts();
+	}, []);
 
+	//adding a contact
 	const addContact = async (data) => {
 		try {
 			const response = await axios.post(
@@ -53,26 +52,31 @@ export default function ContactsContainer() {
 		reset();
 	};
 
-  //deleting a contact
-  const handleContactDelete = (id) => {
-    //TODO: async???
-    deleteContact(id);
-    const newContacts = getContacts();
-    setContacts(newContacts);
-  };
+	//deleting a contact
+	const handleContactDelete = (id) => {
+		deleteContact(id)
+	};
+	
+	//get contacts after deletion
+	useEffect(()=>{
+		if(deletedContact) {
+			getContacts();
+		}
+	}, [deletedContact])
 
-  if (loading) {
-    <div>Crunching your data.</div>;
-  }
+	if (loading) {
+		<div>Crunching your data.</div>;
+	}
 
-  if (error) {
-    <div>Couldn't retrieve data.</div>;
-    console.log(error);
-  }
+	if (error) {
+		<div>Couldn't retrieve data.</div>;
+		console.log(error);
+	}
 
   return (
     <>
 		<AdminNavbar className="w-100" />
+		<ReportBug/>
 			<div className="container">
 				<h3 className="w-90 mt-3 d-flex mb-3">Contacts</h3>
 			</div>
@@ -83,12 +87,11 @@ export default function ContactsContainer() {
 
 	{/* add-contact and download-contacts buttons */}
 		<div
-			className="btn-toolbar justify-content-between d-flex flex-row w-90 mb-3"
+			className="btn-toolbar d-flex justify-content-between  w-90 mb-3"
 			role="toolbar"
 			aria-label="Toolbar with button groups"
 		>
 			<div className="btn-group" role="group" aria-label="First group">
-				{/* using anchor instead of btn to trap focus on body instead back to btn */}
 				<button
 					type="button"
 					className="btn btn-success btn-sm"
@@ -111,7 +114,7 @@ export default function ContactsContainer() {
 
 		<div className="container w-90 mx-auto p-0">
 			<table
-				className="table table-sm table-bordered mt-3"
+				className="table table-sm table-bordered mt-3 table-hover"
 				id="contacts-table"
 			>
 				<TableHead />
