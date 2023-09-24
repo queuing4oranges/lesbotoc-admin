@@ -13,11 +13,11 @@ import ContactsList from "./ContactsList";
 import TableHead from "./TableHead";
 
 export default function ContactsContainer() {
-  const { contacts, loading, error, getContacts, setContacts } =
-    useGetContacts();
-  const { success, setSuccess } = useState(false);
-  const { deletedContact, setDeletedContact, deleteContact } =
-    useDeleteContact();
+	const { contacts, loading, error, getContacts, setContacts }=useGetContacts();
+	const { deletedContact, setDeletedContact, deleteContact }=useDeleteContact();	
+	
+	const [success, setSuccess]=useState(false);
+	const [openModal, setOpenModal]=useState(false);
 	
   const {
     register,
@@ -29,7 +29,7 @@ export default function ContactsContainer() {
   //getting all contacts on first render
   useEffect(() => {
     getContacts();
-  }, [success]);
+  }, []);
 
   //adding a contact TODO: modal doesnt close!
 
@@ -43,6 +43,7 @@ export default function ContactsContainer() {
 			if (response.status === 200) {
 				swal("YEAH BABY!", "You added a new contact.", "success");
 				getContacts();
+				setOpenModal(false);
 			} else {
 				console.log("something went wrong");
 			}
@@ -88,14 +89,15 @@ export default function ContactsContainer() {
 		>
 			<div className="btn-group" role="group" aria-label="First group">
 				{/* using anchor instead of btn to trap focus on body instead back to btn */}
-				<a
+				<button
 					type="button"
 					className="btn btn-success btn-sm"
+					onClick={()=>setOpenModal(true)}
 					data-bs-toggle="modal"
 					data-bs-target="#contact-modal"
 				>
 				Add Contact
-				</a>
+				</button>
 			</div>
 
 			<div className="btn-group" role="group" aria-label="Second group">
@@ -128,8 +130,12 @@ export default function ContactsContainer() {
 	</div>
 
       {/* this is the modal container */}
-
-	<div className="modal fade" tabIndex="-1" id="contact-modal" data-bs-backdrop="static" data-bs-keyboard="false">
+	{openModal &&
+	<div 
+		className={`modal fade${openModal ? ' show' : ''}`} 
+		tabIndex="-1" 
+		id="contact-modal"
+		style={{ display: openModal ? 'block' : 'none' }}>
 		<div className="modal-dialog modal-dialog-centered">
 			<div className="modal-content">
 				<div className="modal-header  d-flex flex-column pb-3 align-items-center">
@@ -249,8 +255,11 @@ export default function ContactsContainer() {
 							<button
 								type="button"
 								className="btn btn-warning"
-								onClick={() => reset()}
-								data-bs-dismiss="modal"
+								onClick={() => {
+									reset(); 
+									setOpenModal(false)
+								}}
+								
 							>
 							Close
 							</button>
@@ -264,6 +273,7 @@ export default function ContactsContainer() {
 			</div>
 		</div>
 	</div>
+	}
     </>
   );
 }
