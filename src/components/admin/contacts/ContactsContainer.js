@@ -15,24 +15,21 @@ import { useDeleteContact, useGetContacts } from "../../customHooks";
 //components
 import AdminNavbar from "../AdminNavbar";
 import Searchbar from "./Searchbar";
-import ContactsList from "./ContactsList";
 import TableHead from "./TableHead";
 import ReportBug from "../../includes/ReportBug";
 import EditModal from "./EditModal";
 
 export default function ContactsContainer() {
-	const { contacts, loading, error, getContacts }=useGetContacts();
-	const { deletedContact, deleteContact }=useDeleteContact();	
-	const [editContactOpen, setEditContactOpen]=useState(false);
 	const [openModal, setOpenModal]=useState(false);
 	const [openEditModal, setOpenEditModal]=useState(false);
-	const [contactEdited, setContactEdited] = useState(false);
 	const [selectedContact, setSelectedContact] = useState(false);
-
+	
+	const { contacts, loading, error, getContacts }=useGetContacts();
+	const { deletedContact, deleteContact }=useDeleteContact();	
 	const {
 		register,
 		handleSubmit,
-		reset, //resets form inputs to blank
+		reset,
 		formState: { errors },
 		} = useForm();
 
@@ -77,7 +74,6 @@ export default function ContactsContainer() {
 	//editing a contact
 	const handleContactEdit = (contact) => {
 		setOpenEditModal(true)
-		console.log(contact)
 		setSelectedContact(contact)
 	}
 
@@ -100,7 +96,7 @@ export default function ContactsContainer() {
 
 	{/* this is the whole contacts container */}
 	<div className="container">
-        	<Searchbar contacts={contacts} />
+        <Searchbar contacts={contacts} />
 
 	{/* add-contact and download-contacts buttons */}
 		<div
@@ -152,7 +148,7 @@ export default function ContactsContainer() {
 								<Moment format="D. MMMM YYYY">{contact.updated_at}</Moment>
 							)}
 							</td>
-							<td className="td td-crud d-flex justify-content-between">
+							<td className="td td-crud d-flex justify-content-between p-2">
 					
 		{/* Editing a contact */}
 					<button
@@ -336,7 +332,12 @@ export default function ContactsContainer() {
 	}
 	
 	{openEditModal &&
-	<EditModal contact={selectedContact} />
+	<EditModal 
+		contact={selectedContact} 
+		openEditModal={openEditModal} 
+		setOpenEditModal={setOpenEditModal}
+		getContacts={getContacts}
+		/>
 	}
 	
     </>

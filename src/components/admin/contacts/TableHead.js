@@ -22,7 +22,7 @@ export default function TableHead() {
           <th scope="col" className="col-updated">
             Updated
           </th>
-          <th scope="col" className="col-edit">
+          <th scope="col" className="col-edit d-flex justify-content-center">
             Edit / Delete
           </th>
         </tr>
