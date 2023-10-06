@@ -4,20 +4,30 @@ import { CSVLink } from "react-csv";
 import { useForm } from "react-hook-form";
 import axios from "axios";
 import swal from "sweetalert";
+import Moment from "react-moment";
+
+//icons
+import { BsPencilSquare, BsTrash } from "react-icons/bs";
 
 //hooks
 import { useDeleteContact, useGetContacts } from "../../customHooks";
+
+//components
 import AdminNavbar from "../AdminNavbar";
 import Searchbar from "./Searchbar";
 import ContactsList from "./ContactsList";
 import TableHead from "./TableHead";
 import ReportBug from "../../includes/ReportBug";
+import EditModal from "./EditModal";
 
 export default function ContactsContainer() {
 	const { contacts, loading, error, getContacts }=useGetContacts();
 	const { deletedContact, deleteContact }=useDeleteContact();	
-	
+	const [editContactOpen, setEditContactOpen]=useState(false);
 	const [openModal, setOpenModal]=useState(false);
+	const [openEditModal, setOpenEditModal]=useState(false);
+	const [contactEdited, setContactEdited] = useState(false);
+	const [selectedContact, setSelectedContact] = useState(false);
 
 	const {
 		register,
@@ -47,7 +57,7 @@ export default function ContactsContainer() {
 				console.log("something went wrong");
 			}
 		} catch (error) {
-			console.error("Error adding contact:", error);
+			console.log("Error adding contact:", error);
 		}
 		reset();
 	};
@@ -65,7 +75,11 @@ export default function ContactsContainer() {
 	}, [deletedContact])
 	
 	//editing a contact
-	
+	const handleContactEdit = (contact) => {
+		setOpenEditModal(true)
+		console.log(contact)
+		setSelectedContact(contact)
+	}
 
 	if (loading) {
 		<div>Crunching your data.</div>;
@@ -124,11 +138,51 @@ export default function ContactsContainer() {
 				<tbody className="table-body">
 					{contacts &&
 						contacts.map((contact) => (
-							<ContactsList
-								contact={contact}
-								handleContactDelete={handleContactDelete}
-							/>
-						))}
+						<tr className="table-row" key={contact.id}>
+							<td className="td td-name">{contact.name}</td>
+							<td className="td td-wherefrom">{contact.wherefrom}</td>
+							<td className="td td-email">{contact.email}</td>
+							<td className="td td-phone">{contact.phone}</td>
+							<td className="td td-newsletter">{contact.newsletter === 0 ? "no" : "yes"}</td>
+							<td className="td td-age">{contact.age}</td>
+							<td className="td td-updated">
+							{!contact.updated_at ? (
+								""
+							) : (
+								<Moment format="D. MMMM YYYY">{contact.updated_at}</Moment>
+							)}
+							</td>
+							<td className="td td-crud d-flex justify-content-between">
+					
+		{/* Editing a contact */}
+					<button
+						// onClick={() => showContact(contact.id)}
+						type="button"
+						className="btn btn-info btn-sm "
+						onClick={()=>handleContactEdit(contact)}
+					>
+						<BsPencilSquare />
+					</button>
+
+		{/* Deleting a contact */}
+					<button
+						type="button"
+						className="btn btn-danger btn-sm"
+						onClick={() => handleContactDelete(contact.id)}
+					>
+						<BsTrash />
+					</button>
+				</td>
+						</tr>
+							// <ContactsList
+							// 	contact={contact}
+							// 	handleContactDelete={handleContactDelete}
+							// 	setEditContactOpen={setEditContactOpen}
+							// 	handleContactEdit={handleContactEdit}
+							// 	openEditModal={openEditModal}
+							// />
+						))
+					}
 				</tbody>
 			</table>
 		</div>
@@ -280,6 +334,11 @@ export default function ContactsContainer() {
 		</div>
 	</div>
 	}
+	
+	{openEditModal &&
+	<EditModal contact={selectedContact} />
+	}
+	
     </>
   );
 }
