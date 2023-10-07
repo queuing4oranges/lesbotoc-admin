@@ -1,8 +1,4 @@
-//TODO: clean css additional to bootstrap:
-
-/***CONTACTSCONTAINER.JS***/
-
-/***SEARCHBAR.JS***/
+//searchbar
 .edit-list:nth-child(odd) {
 	background-color: #e6f4f1;
 }
@@ -58,63 +54,3 @@ thead .table-hr {
     display: none;
   }
 }
-///////////////////////////////////////////////////////////////////////
-//legacy css below: (needs to be striped)
-
-// /*EditContacts*/
-
-// .edit-contacts-modal {
-//   margin-top: 20px;
-// }
-
-// .add-contact-btn-cont {
-//   display: flex;
-//   justify-content: space-between;
-// }
-
-// .contact-edit-cont-btn {
-//   display: flex;
-//   justify-content: space-between;
-// }
-
-// /*for mobiles*/
-
-// @media (max-width: 600px) {
-
-//   .edit-list {
-//     max-width: 300px;
-//     margin: auto;
-//   }
-
-//   .edit-list-item {
-//     width: 100%;
-//     margin: 5px;
-//   }
-
-//   .edit-list-item-email {
-//     display: none;
-//   }
-
-//   .contacts__table {
-//     width: 350px;
-//     font-size: 0.7em;
-
-//     & td {
-//       padding: 0 5px;
-//       height: 25px;
-
-//       & button {
-//         width: 20px;
-//         display: flex;
-//         justify-content: center;
-//         align-items: center;
-//       }
-//     }
-//   }
-
-//   //EditModal
-//   .edit-button,
-//   .edit-btn {
-//     font-size: 0.7em;
-//   }
-// }
