@@ -7,7 +7,7 @@ import { wherefromPlaces, ageGroups } from "../Datalists";
 export default function EditModal({ contact, openEditModal, setOpenEditModal, getContacts }) {
 	const { name, wherefrom, email, phone, newsletter, age, updated_at, id }=contact;
 
-	const { register, handleSubmit, reset } = useForm({
+	const { register, handleSubmit, reset, formState: { errors } } = useForm({
 		defaultValues: {
 			id, name, wherefrom, email, phone, newsletter, age, updated_at 
 		}
@@ -43,6 +43,18 @@ export default function EditModal({ contact, openEditModal, setOpenEditModal, ge
 					<div className="modal-content">
 						<div className="modal-header  d-flex flex-column pb-3 align-items-center">
 							<h5 className="modal-title">Edit a Contact</h5>
+								<div className="error-container">
+									{errors ? (
+										<div className="contact-errors">
+											{errors.name && (
+												<p className="alert alert-danger py-0 mb-1">{errors.name?.message}</p>
+											)}
+											{errors.email && (
+												<p className="alert alert-danger py-0 mb-1">{errors.email?.message}</p>
+											)}
+										</div>
+									) : null}
+								</div>
 						</div>
 
 						<div className="modal-body">
