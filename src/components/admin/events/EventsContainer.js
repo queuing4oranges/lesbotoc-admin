@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import moment from 'moment/min/moment-with-locales';
 import Moment from "react-moment";
 import { useForm } from "react-hook-form";
 import axios from "axios";
@@ -24,11 +23,13 @@ export default function EventsContainer() {
 		reset,
 		formState: { errors },
 		} = useForm();
+	const onSubmit = data => console.log(data)
 	
 	useEffect(() => {
 	  getEvents()
 	}, [])
 
+	//adding event
 	const addEvent = () => {
 		//
 	}
@@ -112,41 +113,114 @@ export default function EventsContainer() {
 				
 				{/* adding events */}
 				<Col md="9" >
-					<Card>
+					<Card className="p-3">
 						<CardTitle>
 							<h5 className="m-2 p-2">Add an event</h5>
 						</CardTitle>
 
-						<form>
-							//input name of event
+						<form onSubmit={handleSubmit(addEvent)}>
+							<div className="form-group form-floating">
+								<input
+									{...register("name", {
+										required: "Please add a title for the event", 
+										//TODO: add maximum length and user should not be able to type more
+										maxLength: 22
+									})} 
+									className="form-control p-2"
+									placeholder="title of the event"
+									type="text"
+								/>
+								<label htmlFor="name">Title of the event</label>
+							</div>
+							
 							<CardBody className="d-flex">
 								
 								<Col md="4">
-									//input name of Venue
-									<br />
-									//input address
-									<br />
-									//input website
-									<br />
-									//input longtitude
-									<br />
-									//input latitude
+									<div className="form-group form-floating my-2">
+										{/* //TODO: make a little caret or arrow down */}
+										<select 
+											{...register("event_type")}
+											className="form-control"
+											placeholder="Type of the event"
+											// type="text"
+										>
+											{/* //TODO: what to display first here? */}
+											<option value="Lesbotoc Event">Lesbotoč Event</option>
+											<option value="Speed Dating">Speed Dating</option>
+											<option value="Other Event">Other Event</option>
+											<option value="Lesbotoc Camp">Lesbotoč Camp</option>
+										</select>
+									</div>
+
+									<div className="form-group form-floating my-2">
+										<input 
+											{...register("loc_name")}
+											className="form-control p-2"
+											placeholder="Name of the venue"
+											type="text" 
+										/>
+										<label htmlFor="loc_name">Name of the venue</label>
+									</div>
+
+									<div className="form-group form-floating my-2">
+										<input 
+											{...register("loc_address")}
+											className="form-control p-2"
+											placeholder="Address of the venue"
+											type="text" 
+										/>
+										<label htmlFor="loc_address">Address of the venue</label>
+									</div>
+									
+									<div className="form-group form-floating my-2">
+										<input 
+											{...register("latitude")}
+											className="form-control p-2"
+											placeholder="Latitude (1st number)"
+											type="text" 
+										/>
+										<label htmlFor="latitude">Latitude (1st number)</label>
+									</div>
+									
+									<div className="form-group form-floating my-2">
+										<input 
+											{...register("longtitude")}
+											className="form-control p-2"
+											placeholder="Longtitude (2nd number)"
+											type="text" 
+										/>
+										<label htmlFor="latitude">Longtitude (2nd number)</label>
+									</div>
+
+									<div className="form-group form-floating my-2">
+										<input 
+											{...register("loc_website")}
+											className="form-control p-2"
+											placeholder="Website of venue"
+											type="text" 
+										/>
+										<label htmlFor="loc_website">Website of venue</label>
+									</div>
 								</Col>
 
 								<Col md="4">
-									//input date
+									//date
 									<br />
-									//input time
+									//time
 									<br />
-									//input price
+									//price
 									<br />
-									//input Capacity
+									//capacity
+									<br />
+									//image_path
+									<br />
+									//image_alt
 								</Col>
 								
 								<Col md="4">
-									//textarea description
+									//instructions
 									<br />
-									//textarea how to get there
+									//description
 								</Col>
 								
 							</CardBody>	
