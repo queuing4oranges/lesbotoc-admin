@@ -12,10 +12,6 @@
 
 //TODO: set up ellipsis on long titles for left-hand container
 
-.add-event-container {
-	background-color: $light-blue;
-}
-
 .event-form .form-group {
 	& label {
 		font-size: 0.8rem;
@@ -24,8 +20,28 @@
 	& input {
 		height: 3rem;
 	}
+	& textarea {
+	resize: none;
+	}
 }
 
+.add-event-card {
+	background-color: $light-blue;
+}
+
+.event-container button a {
+	text-decoration: none;
+}
+
+.event-image-upload {
+	background-color: white;
+	padding: 1em;
+	& p, a {
+		font-size: 0.8em;
+	}
+}
+
+//events-archive
 
 
 //############### legacy code below

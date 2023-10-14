@@ -4,10 +4,10 @@ import Moment from "react-moment";
 import { useForm } from "react-hook-form";
 import axios from "axios";
 import swal from "sweetalert";
-import { Container, Col, Row, Card, CardBody, CardTitle } from "reactstrap";
+import { Container, Col, Row, Card, CardBody, CardTitle, Tooltip } from "reactstrap";
 
 //icons
-import { BsPencilSquare, BsTrash } from "react-icons/bs";
+import { BsPencilSquare, BsTrash, BsInfoSquare } from "react-icons/bs";
 
 //components
 import AdminNavbar from "../AdminNavbar";
@@ -23,16 +23,44 @@ export default function EventsContainer() {
 		reset,
 		formState: { errors },
 		} = useForm();
-	const onSubmit = data => console.log(data)
+	
+	// const onSubmit = data => console.log(data)
 	
 	useEffect(() => {
 	  getEvents()
 	}, [])
 
 	//adding event
-	const addEvent = () => {
-		//
+	const addEvent = async (data) => {
+
+		
+		//making a formData object and appending the image file to it
+		const form = document.getElementById("event-form");
+		const formData = new FormData(form);
+		const eventImage = data.image_path[0];
+		formData.append("image_path", eventImage);
+
+		
+		try {
+			const response = await axios.post("https://api2.queuing4oranges.com/events/create.php", formData);
+			
+			if (response.status === 200) {
+				swal("Well, well well...", "Seems like a new event is coming soon.", "success");
+				getEvents();
+			} else {
+				console.log("Not able to add event.");
+			}
+		} catch(error) {
+			console.log("Error adding event");
+		}
+		reset();		
 	}
+	
+	//tooltip for uploading images
+	const [tooltipOpen, setTooltipOpen] = useState(false);
+	const toggle = () => setTooltipOpen(!tooltipOpen);
+	
+	console.log(errors)
 	
 	return (
 	<>
@@ -42,7 +70,7 @@ export default function EventsContainer() {
 				<h3 className="w-90 mt-3 d-flex mb-3">Events</h3>
 			</div>
 		
-		<Container> 
+		<Container className="event-container"> 
 			<Row>
 				{/* list of events */}
 				<Col md="3" >
@@ -109,11 +137,15 @@ export default function EventsContainer() {
 				
 				{/* adding events */}
 				<Col md="9" >
-					<Card className="p-3">
+					<Card className="px-3 add-event-card">
 
 						<form 
-							className="event-form"
-							onSubmit={handleSubmit(addEvent)}>
+							className="event-form  d-flex flex-column align-items-center"
+							onSubmit={handleSubmit(addEvent)}
+							encType="multipart/form-data"
+							id="event-form"
+							autoComplete="on"
+							>
 								
 							<CardTitle className="d-flex align-items-center">
 								<h5 className="mt-1 p-3">Add an event:</h5>
@@ -128,7 +160,7 @@ export default function EventsContainer() {
 										type="text"
 										maxLength={20}
 										/>
-									<label htmlFor="name" className="pt-2">Title of the event (max. 20 char)</label>
+									<label htmlFor="name" className="pt-2">*Title of the event (max. 20)</label>
 								</div>
 							
 								<div className="form-group form-floating ms-2">
@@ -139,7 +171,7 @@ export default function EventsContainer() {
 										type="text"
 										style={{height: "unset"}}
 									>
-										<option selected value="Lesbotoc Event">Select type of event</option>
+										<option defaultValue="Lesbotoc Event">Select type of event</option>
 										<option value="Lesbotoc Event">Lesbotoč Event</option>
 										<option value="Speed Dating">Speed Dating</option>
 										<option value="Other Event">Other Event</option>
@@ -147,6 +179,24 @@ export default function EventsContainer() {
 									</select>
 								</div>
 							</CardTitle>
+							
+							<div className="error-container">
+								{errors ? (
+									<div>
+										{errors.name && (
+										<p className="alert alert-danger py-0 mb-1">{errors.name?.message}</p>
+										)}
+										{errors.latitude && (
+										<p className="alert alert-danger py-0 mb-1">{errors.latitude?.message}</p>
+										)}
+										{errors.latitude && (
+										<p className="alert alert-danger py-0 mb-1">{errors.latitude?.message}</p>
+										)}
+									</div>
+								) : null}
+							</div>					
+							
+							<hr style={{ color: "black", width: "100%", margin: "0"}} />
 							
 							<CardBody className="d-flex justify-content-center add-event-container">
 								
@@ -174,22 +224,39 @@ export default function EventsContainer() {
 									
 									<div className="form-group form-floating my-2">
 										<input 
-											{...register("latitude")}
+											{...register("latitude", {
+											required: "Add latitude for Google Maps", 
+										})} 
 											className="form-control ps-2 mt-2"
 											placeholder="Latitude (1st number)"
 											type="text" 
+											required
 										/>
-										<label htmlFor="latitude" className="pt-2">Latitude (1st number)</label>
+										<label htmlFor="latitude" className="pt-2">*Latitude (1st number)</label>
 									</div>
 									
 									<div className="form-group form-floating my-2">
 										<input 
-											{...register("longtitude")}
+											{...register("longtitude", {
+											required: "Add longtitude for Google Maps", 
+										})} 
 											className="form-control ps-2 mt-2"
 											placeholder="Longtitude (2nd number)"
 											type="text" 
+											required
 										/>
-										<label htmlFor="longitude" className="pt-2">Longtitude (2nd number)</label>
+										<label htmlFor="longitude" className="pt-2">*Longtitude (2nd number)</label>
+									</div>
+									
+									<div className="form-group form-floating my-2">
+										<textarea 
+											{...register("instructions")}
+											className="form-control ps-2 mt-2"
+											placeholder="How to get there"
+											type="text" 
+											style={{height: "7rem"}}
+										/>
+										<label htmlFor="instructions" className="pt-2">How to get there</label>
 									</div>
 								</Col>
 
@@ -207,22 +274,28 @@ export default function EventsContainer() {
 									<div className="d-flex">
 										<div className="form-group form-floating w-50">
 											<input 
-												{...register("date")}
+											{...register("date", {
+											required: "Please add a date", 
+											})} 
 												className="form-control"
 												placeholder="Date"
 												type="date" 
+												required
 											/>
-											<label htmlFor="date" className="pt-2">Date</label>
+											<label htmlFor="date" className="pt-2">*Date</label>
 										</div>
 
 										<div className="form-group form-floating w-50">
 											<input 
-												{...register("time")}
+											{...register("time", {
+											required: "Please add a time", 
+											})} 
 												className="form-control"
 												placeholder="Time"
-												type="time" 
+												type="time"
+												required 
 											/>
-											<label htmlFor="time" className="pt-2">Time</label>
+											<label htmlFor="time" className="pt-2">*Time</label>
 										</div>
 									</div>
 									
@@ -247,52 +320,70 @@ export default function EventsContainer() {
 											<label htmlFor="capacity" className="pt-2">Participants</label>
 										</div>
 									</div>
-									{/* //TODO - some explaination for pics  */}
-									<span>Please upload only pics up to 100kb</span>
-									<input 
-										{...register("image_path")}
-										className="form-control mt-2"
-										placeholder="Image"
-										type="file" 
-									/>
-
-									<div className="form-group form-floating my-2">
-										<input 
-											{...register("image_alt")}
-											className="form-control ps-2 mt-2"
-											placeholder="Image title"
-											type="text" 
-										/>
-										<label htmlFor="image_alt" className="pt-2">Image title</label>
+									
+									<br />
+									
+									<div className="form-group event-image-upload">
+										<div className="d-flex">
+											<p className="me-2">
+												*Upload an image 
+											</p>
+										 	<BsInfoSquare id="uploadImageTooltip"/>
+											<Tooltip
+												isOpen={tooltipOpen}
+												target="uploadImageTooltip"
+												toggle={toggle}
+												placement="right"
+											>
+												upload images up to 300kb - the smaller the faster your website (jpeg, jpg, png, gif)
+											</Tooltip>
+												
+										</div>
+										<a
+											href="https://imagecompressor.com/"
+											target="_blank"
+											rel="noreferrer"
+											>
+											Online Image Compressor
+										</a>
 									</div>
+									<input 
+										{...register("image_path", {
+											required: "Please add a picture"
+										})}
+										className="form-control event-image-upload form-control-sm"
+										placeholder="Image"
+										name="image_path"
+										type="file"
+										id="image_path"
+									/>
+									
 								</Col>
 								
-								<Col md="4" className="mx-1">
+								<Col md="4" className="mx-1">								
 									<div className="form-group form-floating my-2">
 										<textarea 
-											{...register("instructions")}
-											className="form-control ps-2 mt-2"
-											placeholder="How to get there"
-											type="text" 
-											style={{height: "10rem"}}
-										/>
-										<label htmlFor="instructions" className="pt-2">How to get there</label>
-									</div>
-									
-									<div className="form-group form-floating my-2">
-										<textarea 
-											{...register("description")}
+											{...register("description", {
+											required: "Please add a short description", 
+											})} 
 											className="form-control ps-2 mt-2"
 											placeholder="Description of the event"
 											type="text" 
-											style={{height: "10rem"}}
+											style={{height: "17rem"}}
+											required
 										/>
-										<label htmlFor="description" className="pt-2">Description of the event</label>
+										<label htmlFor="description" className="pt-2">*Description of the event</label>
 									</div>
+									
+									<button 
+										type="submit" 
+										className="btn btn-success mt-5 d-block w-100"
+										>
+										Save new event
+									</button>
 								</Col>
-								
 							</CardBody>	
-							<button>Save</button>
+
 						</form>
 						
 					</Card>
