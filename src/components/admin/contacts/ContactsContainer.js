@@ -336,7 +336,7 @@ export default function ContactsContainer() {
 			setOpenEditModal={setOpenEditModal}
 			getContacts={getContacts}
 			errors={errors}
-			/>
+		/>
 		}
 	
     </>

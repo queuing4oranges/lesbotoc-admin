@@ -10,12 +10,8 @@ import ReportBug from "../../includes/ReportBug";
 import { Container, Col, Row, Card, CardBody } from "reactstrap";
 
 //import icons
-import {
-MoneyIcon,
-PenIcon,
-PeopleIcon,
-DeleteIcon,
-} from "../../../assets/SvgIcons";
+import { BsPencilSquare, BsTrash, BsPeopleFill } from "react-icons/bs";
+import { FaMoneyBillAlt } from "react-icons/fa"
 
 export default function EventsArchive() {
 	const [events, setEvents] = useState([]);
@@ -31,14 +27,13 @@ export default function EventsArchive() {
 	}, [success]);
 
 	const getEvents = () => {
-		axios
-		.get("https://api2.queuing4oranges.com/events/read.php")
-			.then(function (response) {
-				setEvents(response.data);
-				setEventsLoaded(true);
-			})
-		.catch(function (error) {
-			if (error.response) {
+		axios.get("https://api2.queuing4oranges.com/events/read.php")
+		.then(function (response) {
+			setEvents(response.data);
+			setEventsLoaded(true);
+		})
+		.then(function (error) {
+			if (error) {
 				console.log(error.response.data);
 			}
 		});
@@ -89,17 +84,18 @@ export default function EventsArchive() {
 					<h3 className="w-90 mt-3 d-flex mb-3">Events Archive</h3>
 				</div>
 			
-			<Container className="events-archive-container">
+			<Container>
 				<Row>
 					<Col>
 						<Card>
 							<CardBody>
 								
 								{eventsLoaded && (
-									<div className="table-container">
-										<table className="table table-sm table-bordered contacts__table">
+									<div>
+										<table className="table table-sm table-bordered">
 											<thead>
 												<tr>
+													{/* //TODO: which of these classnames are actually needed for responsiveness? */}
 													<th scope="col" className="col-event">
 													Event
 													</th>
@@ -119,10 +115,10 @@ export default function EventsArchive() {
 													Time
 													</th>
 													<th scope="col" className="col-price">
-													<MoneyIcon width={16} height={16} fill={"currentColor"} />
+													<FaMoneyBillAlt />
 													</th>
 													<th scope="col" className="col-capac">
-													<PeopleIcon width={20} height={20} fill="currentColor" />
+													<BsPeopleFill  />
 													</th>
 													<th scope="col" className="col-descr">
 													Description
@@ -136,6 +132,7 @@ export default function EventsArchive() {
 											<tbody className="table-body">
 												{events.map((event, key) => (
 												<tr className="table-row" key={key}>
+													{/* TODO: which td are actually needed for responsivness? */}
 													<td className="td td-name">{event.name}</td>
 													<td className="td td-locname">{event.loc_name}</td>
 													<td className="td td-locadd">{event.loc_address}</td>
@@ -157,14 +154,14 @@ export default function EventsArchive() {
 														{event.capacity === 0 ? "" : event.capacity}
 													</td>
 													<td className="td td-descr">{event.description}</td>
-													<td className="archive-btn-cont">
+													<td className="d-flex justify-content-between">
 												
 														<button
 															type="button"
-															className="btn btn-sm pencil-item"
+															className="btn btn-sm btn-info"
 															onClick={() => showEvent(event.id)}
 															>
-															<PenIcon width={20} height={20} fill={"currentColor"} />
+															<BsPencilSquare />
 														</button>
 
 															{openModal && (
@@ -178,15 +175,11 @@ export default function EventsArchive() {
 															)}
 
 														<button
-															className="btn btn-sm trash-item"
+															className="btn btn-sm btn-danger"
 															id={event.id}
 															onClick={() => deleteEvent(event.id)}
 														>
-															<DeleteIcon
-															  width={20}
-															  height={20}
-															  fill={"currentColor"}
-															/>
+															<BsTrash />
 														</button>
 													</td>
 												</tr>

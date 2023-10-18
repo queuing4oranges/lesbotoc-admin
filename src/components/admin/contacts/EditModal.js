@@ -5,7 +5,7 @@ import { useForm } from "react-hook-form";
 import { wherefromPlaces, ageGroups } from "../Datalists";
 
 export default function EditModal({ contact, openEditModal, setOpenEditModal, getContacts }) {
-	const { name, wherefrom, email, phone, newsletter, age, updated_at, id }=contact;
+	const { name, wherefrom, email, phone, newsletter, age, updated_at, id } = contact;
 
 	const { register, handleSubmit, reset, formState: { errors } } = useForm({
 		defaultValues: {
@@ -14,7 +14,6 @@ export default function EditModal({ contact, openEditModal, setOpenEditModal, ge
 	})
 	
 	const editContact = async (data) => {
-		console.log(data)
 		try {
 			const response = await axios.put(`https://api2.queuing4oranges.com/contacts/update.php/${id}`, {...data, id})
 			.then(function(response) {
@@ -60,7 +59,7 @@ export default function EditModal({ contact, openEditModal, setOpenEditModal, ge
 						<div className="modal-body">
 							<form
 								onSubmit={handleSubmit(editContact)}
-								className=" contact-form p-3"
+								className="contact-form p-3"
 							>
 								<div className="form-group mx-1 mb-3 form-floating">
 									<input

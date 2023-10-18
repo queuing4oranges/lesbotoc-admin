@@ -13,8 +13,12 @@ import { BsPencilSquare, BsTrash, BsInfoSquare } from "react-icons/bs";
 import AdminNavbar from "../AdminNavbar";
 import ReportBug from "../../includes/ReportBug";
 import { useGetEvents } from "../../customHooks";
+import EditEvent from "./EditEvent";
 
 export default function EventsContainer() {
+	const [success, setSuccess]=useState(false)
+	const [openEditModal, setOpenEditModal] = useState(false);
+	const [selectedEvent, setSelectedEvent] = useState(false);
 	
 	const { events, loading, error, getEvents } = useGetEvents();
 		const {
@@ -24,43 +28,89 @@ export default function EventsContainer() {
 		formState: { errors },
 		} = useForm();
 	
+	
+	// const onSubmit = data => console.log(data)
+	
+		
 	// const onSubmit = data => console.log(data)
 	
 	useEffect(() => {
 	  getEvents()
-	}, [])
+	}, [success])
 
 	//adding event
 	const addEvent = async (data) => {
-
-		
-		//making a formData object and appending the image file to it
-		const form = document.getElementById("event-form");
-		const formData = new FormData(form);
-		const eventImage = data.image_path[0];
-		formData.append("image_path", eventImage);
-
-		
 		try {
+			//clear the success flag initially
+			setSuccess(false)
+	
+			//get the form element and create a FormData object
+			const form = document.getElementById("event-form");
+			const formData = new FormData(form);
+			const eventImage = data.image_path[0];
+			//append the image to the formData
+			formData.append("image_path", eventImage);
+			//send post request
 			const response = await axios.post("https://api2.queuing4oranges.com/events/create.php", formData);
 			
 			if (response.status === 200) {
 				swal("Well, well well...", "Seems like a new event is coming soon.", "success");
-				getEvents();
+				setSuccess(true)
+				// getEvents();
 			} else {
-				console.log("Not able to add event.");
+				console.error("Failed to add event: Status code " + response.status);
 			}
-		} catch(error) {
-			console.log("Error adding event");
+		} catch (error) {
+			console.error("Error adding event:", error);
+		} finally {
+			reset();		
 		}
-		reset();		
 	}
 	
 	//tooltip for uploading images
 	const [tooltipOpen, setTooltipOpen] = useState(false);
 	const toggle = () => setTooltipOpen(!tooltipOpen);
 	
-	console.log(errors)
+	//deleting an event
+	const deleteEvent = (id) => {
+		setSuccess(false)
+		swal({
+			title: "Sure?",
+			text: "Do you really want to delete this exquisite event?",
+			icon: "warning",
+			dangerMode: true,
+		}).then((willDelete) => {
+			if (willDelete) {
+				axios.delete(`https://api2.queuing4oranges.com/events/delete.php/${id}`)
+				.then(function () {
+				swal("Deleted!", "It will never hurt your eyes again. Promised.", "success");
+				setSuccess(true)
+		});
+			} else {
+				console.error("Could not delete the event");
+			}
+		});
+	};
+	
+	//editing event
+	//TODO: setSelectedEvent might need some other naming? or some prev.values thing
+	const handleEventEdit = (event) => {
+		setOpenEditModal(true);
+		setSelectedEvent(event);
+	}
+	
+	
+	//display loading
+	if (loading) { 
+		return (
+		<div style={{ display: "flex", justifyContent: "center", alignItems: "center"}}>Bear with me. I'm crunching your data....</div>)
+	}
+
+	//display error in loading data
+	if (error) {
+		<div>Couldn't get list of events. Sorry...</div>;
+		console.log(error);
+	}
 	
 	return (
 	<>
@@ -110,7 +160,7 @@ export default function EventsContainer() {
 												<button
 												type="button"
 												className="btn btn-sm btn-info m-1"
-												// onClick={() => showEvent(event.id)}
+												onClick={()=>handleEventEdit(event)}
 												>
 												<BsPencilSquare />
 												</button>
@@ -120,7 +170,7 @@ export default function EventsContainer() {
 												type="button"
 												className="btn btn-sm btn-danger m-1"
 												id={event.id}
-												// onClick={() => deleteEvent(event.id)}
+												onClick={() => deleteEvent(event.id)}
 												>
 												<BsTrash />
 												</button>
@@ -389,20 +439,18 @@ export default function EventsContainer() {
 					</Card>
 				</Col>
 			</Row>
+			
+			{openEditModal &&
+			<EditEvent 	
+				event={selectedEvent} 
+				setSelectedEvent={setSelectedEvent} 
+				openEditModal={openEditModal} 
+				setOpenEditModal={setOpenEditModal} 
+			/>  
+			}
+
 		</Container>
 	
 	</>
   )
 }
-
-							
-							
-{/* {openModal && (
-<EditEventModal
-data={data}
-getEvents={getEvents}
-setOpenModal={setOpenModal}
-oneEventLoaded={oneEventLoaded}
-setOneEventLoaded={setOneEventLoaded}
-/>
-)} */}
