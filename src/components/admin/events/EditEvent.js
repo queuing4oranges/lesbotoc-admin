@@ -5,11 +5,8 @@ import swal from "sweetalert";
 
 import { GrClose } from "react-icons/gr";
 
-export default function EditEvent({ event, setSelectedEvent, openEditModal, setOpenEditModal }) {
+export default function EditEvent({ event, setSelectedEvent, openEditModal, setOpenEditModal, setSuccess }) {
 	const { id, name, event_type, loc_name, loc_address, loc_website, latitude, longitude, date, time, price, capacity, image_path, image_alt, instructions, description } = event
-	
-	console.log(event)
-	console.log(longitude)
 	
 	const {
 	register,
@@ -23,21 +20,20 @@ export default function EditEvent({ event, setSelectedEvent, openEditModal, setO
 	});
 	
 	const editEvent = async (data) => {
-		console.log(data)
-		console.log(latitude)
-			try {
-			const response = await axios.put(`https://api2.queuing4oranges.com/events/update.php/${id}`, {...data, id})
-			.then(function(response) {
-				if (response.status === 200) {
-					swal("YEAH BABY!", "You edited this event.", "success");
-				} else if(response.status === 500){
-					swal("Oops", "Not able to edit event", "error")
-				}
-			})
+		try {
+		const response = await axios.put(`https://api2.queuing4oranges.com/events/update.php/${id}`, {...data, id})
+		.then(function(response) {
+			if (response.status === 200) {
+				swal("YEAH BABY!", "You edited this event.", "success");
+			} else if(response.status === 500){
+				swal("Oops", "Not able to edit event", "error")
+			}
+		})
 		} catch(error) {
 			console.log("Error editing event:", error)
 		}
 		setOpenEditModal(false)
+		setSuccess(true)
 	}
 	
 	return (

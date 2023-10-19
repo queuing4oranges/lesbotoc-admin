@@ -5,76 +5,61 @@ import swal from "sweetalert";
 //import components
 import AdminNavbar from "../AdminNavbar";
 import Moment from "react-moment";
-import EditEventModal from "./EditEventModal";
+import EditEvent from "./EditEvent";
 import ReportBug from "../../includes/ReportBug";
 import { Container, Col, Row, Card, CardBody } from "reactstrap";
+
+import { useGetEvents } from "../../customHooks";
 
 //import icons
 import { BsPencilSquare, BsTrash, BsPeopleFill } from "react-icons/bs";
 import { FaMoneyBillAlt } from "react-icons/fa"
 
 export default function EventsArchive() {
-	const [events, setEvents] = useState([]);
-	const [eventsLoaded, setEventsLoaded] = useState(false);
+	const [openEditModal, setOpenEditModal] = useState(false);
+	const [selectedEvent, setSelectedEvent] = useState(false);
 	const [success, setSuccess] = useState(false);
-	const [errorMsg, setErrorMsg] = useState(false);
-	const [openModal, setOpenModal] = useState(false);
-	const [data, setData] = useState([]);
-	const [oneArchiveEventLoaded, setOneArchiveEventLoaded] = useState(false);
+	
+	const { events, loading, error, getEvents } = useGetEvents();
+	
+
+
 
 	useEffect(() => {
 		getEvents();
 	}, [success]);
-
-	const getEvents = () => {
-		axios.get("https://api2.queuing4oranges.com/events/read.php")
-		.then(function (response) {
-			setEvents(response.data);
-			setEventsLoaded(true);
-		})
-		.then(function (error) {
-			if (error) {
-				console.log(error.response.data);
-			}
-		});
-	};
-
+	
+	//deleting an event
+	//TODO: make customhook - to use here and in eventscontainer
 	const deleteEvent = (id) => {
-		setSuccess(false);
+		setSuccess(false)
 		swal({
 			title: "Sure?",
 			text: "Do you really want to delete this exquisite event?",
 			icon: "warning",
 			dangerMode: true,
-		})
-			.then((willDelete) => {
-				if (willDelete) {
-					axios
-					.delete(`https://api2.queuing4oranges.com/events/delete.php/${id}`)
-						.then(function () {
-							swal(
-								"Deleted!",
-								"It will never hurt your eyes again. Promised.",
-								"success"
-							);
-							setSuccess(true);
-						});
-				} else {
-					setErrorMsg("Could not delete the event.");
-					console.log(errorMsg);
-				}
-			});
+		}).then((willDelete) => {
+			if (willDelete) {
+				axios.delete(`https://api2.queuing4oranges.com/events/delete.php/${id}`)
+				.then(function () {
+				swal("Deleted!", "It will never hurt your eyes again. Promised.", "success");
+				setSuccess(true)
+		});
+			} else {
+				console.error("Could not delete the event");
+			}
+		});
 	};
+	
+	//editing event
+	const handleEventEdit = (event) => {
+		setOpenEditModal(true);
+		setSelectedEvent(event);
+	}
+	
+	//TODO: make "show event or sth that shows pic for event"
+	//axios.get(`https://api2.queuing4oranges.com/events/single_read.php/${id}`)
 
-	const showEvent = (id) => {
-		setOpenModal(true);
-		axios
-		.get(`https://api2.queuing4oranges.com/events/single_read.php/${id}`)
-			.then(function (response) {
-				setData(response.data);
-				setOneArchiveEventLoaded(true);
-			});
-		};
 
 	return (
 		<>
@@ -90,42 +75,21 @@ export default function EventsArchive() {
 						<Card>
 							<CardBody>
 								
-								{eventsLoaded && (
+								{events && (
 									<div>
-										<table className="table table-sm table-bordered">
+										<table className="table table-sm table-bordered events-archive-table">
 											<thead>
 												<tr>
-													{/* //TODO: which of these classnames are actually needed for responsiveness? */}
-													<th scope="col" className="col-event">
-													Event
-													</th>
-													<th scope="col" className="col-venue">
-													Venue
-													</th>
-													<th scope="col" className="col-address">
-													Address
-													</th>
-													<th scope="col" className="col-website">
-													Website
-													</th>
-													<th scope="col" className="col-date">
-													Date
-													</th>
-													<th scope="col" className="col-time">
-													Time
-													</th>
-													<th scope="col" className="col-price">
-													<FaMoneyBillAlt />
-													</th>
-													<th scope="col" className="col-capac">
-													<BsPeopleFill  />
-													</th>
-													<th scope="col" className="col-descr">
-													Description
-													</th>
-													<th scope="col" className="col-event-crud">
-													Edit / Delete
-													</th>
+													<th scope="col">Event</th>
+													<th scope="col">Venue</th>
+													<th scope="col" className="hide">Address</th>
+													<th scope="col" className="hide">Website</th>
+													<th scope="col">Date</th>
+													<th scope="col">Time</th>
+													<th scope="col" className="hide"><FaMoneyBillAlt /></th>
+													<th scope="col" className="hide"><BsPeopleFill  /></th>
+													<th scope="col" className="hide">Description</th>
+													<th scope="col">Edit / Delete</th>
 												</tr>
 											</thead>
 
@@ -133,47 +97,37 @@ export default function EventsArchive() {
 												{events.map((event, key) => (
 												<tr className="table-row" key={key}>
 													{/* TODO: which td are actually needed for responsivness? */}
-													<td className="td td-name">{event.name}</td>
-													<td className="td td-locname">{event.loc_name}</td>
-													<td className="td td-locadd">{event.loc_address}</td>
-													<td className="td td-locweb">{event.loc_website}</td>
-													<td className="td td-date">
+													<td className="td">{event.name}</td>
+													<td className="td">{event.loc_name}</td>
+													<td className="td hide">{event.loc_address}</td>
+													<td className="td hide">{event.loc_website}</td>
+													<td className="td">
 														{event.date === "0000-00-00" ? (
 														""
 														) : (
 														<Moment format="D. MMMM YYYY">{event.date}</Moment>
 														)}
 													</td>
-													<td className="td td-time">
+													<td className="td">
 														{event.time === "00:00:00" ? "" : event.time}
 													</td>
-													<td className="td td-price">
+													<td className="td hide">
 														{event.price === 0 ? "" : event.price}
 													</td>
-													<td className="td td-capac">
+													<td className="td hide">
 														{event.capacity === 0 ? "" : event.capacity}
 													</td>
-													<td className="td td-descr">{event.description}</td>
+													<td className="td hide">{event.description}</td>
 													<td className="d-flex justify-content-between">
 												
 														<button
 															type="button"
 															className="btn btn-sm btn-info"
-															onClick={() => showEvent(event.id)}
+															onClick={()=>handleEventEdit(event)}
 															>
 															<BsPencilSquare />
 														</button>
-
-															{openModal && (
-															<EditEventModal
-															  data={data}
-															  getEvents={getEvents}
-															  setOpenModal={setOpenModal}
-															  oneEventLoaded={oneArchiveEventLoaded}
-															  setOneEventLoaded={setOneArchiveEventLoaded}
-															/>
-															)}
-
+														
 														<button
 															className="btn btn-sm btn-danger"
 															id={event.id}
@@ -194,6 +148,19 @@ export default function EventsArchive() {
 						</Card>
 					</Col>
 				</Row>
+				
+			{openEditModal &&
+			<EditEvent 	
+				event={selectedEvent} 
+				setSelectedEvent={setSelectedEvent} 
+				openEditModal={openEditModal} 
+				setOpenEditModal={setOpenEditModal}
+				success={success}
+				setSuccess={setSuccess} 
+			/>  
+			}
+				
+				
 			</Container>
 		</>
 	);

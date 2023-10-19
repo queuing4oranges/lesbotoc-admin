@@ -39,108 +39,12 @@
 	}
 }
 
+/*-------------------------------
+FOR MOBILES
+-------------------------------*/
+@media (max-width: 600px) {
 
-//events-archive
-
-
-//############### legacy code below
-/*Events*/
-
-/*EventsList*/
-
-
-
-
-// /*-------------------------------
-// FOR MOBILES
-// -------------------------------*/
-// @media (max-width: 600px) {
-//   //Events
-//   .events-cont-left {
-//     display: none;
-//   }
-
-//   .events-container {
-//     display: flex;
-//     flex-direction: column;
-//     font-size: 0.7em;
-
-//     & input {
-//       height: 70%;
-//     }
-//   }
-
-//   .events-cont-right {
-//     width: 300px;
-//     margin: 20px auto;
-//   }
-//   .archive-mobile-btn {
-//     display: block;
-//     width: 90%;
-//     margin: auto;
-//   }
-
-//   //AddEvent
-//   .input-item {
-//     max-width: 220px;
-//   }
-
-//   .venue-details,
-//   .specifics-cont {
-//     display: flex;
-//     flex-direction: column;
-//   }
-
-//   .specifics-cont .description {
-//     display: flex;
-//     flex-direction: column;
-//     max-width: 250px;
-//     max-height: 250px;
-//     margin: 5px auto;
-
-//     & label {
-//       align-self: flex-start;
-//     }
-//   }
-
-//   .add-event-save {
-//     margin-top: 10px;
-//     font-size: 0.7em;
-//   }
-
-//   //EventsArchive
-//   .col-address,
-//   .col-website,
-//   .col-price,
-//   .col-descr,
-//   .col-capac,
-//   .td-locadd,
-//   .td-locweb,
-//   .td-price,
-//   .td-capac,
-//   .td-descr {
-//     display: none;
-//   }
-
-//   .archive-btn-cont svg {
-//     height: 10px;
-//   }
-
-//   //EditEventModal
-//   .edit-event-modal {
-//     margin-top: 30px;
-//   }
-//   .edit-cont-top {
-//     flex-direction: column;
-//   }
-
-//   .edit-event-span p {
-//     font-size: 0.7em;
-//   }
-
-//   .description-cont textarea {
-//     height: 80px;
-//   }
-// }
-
-// @media screen and (min-width: 1900px)
+	.events-archive-table .hide {
+		display: none;
+	}
+}

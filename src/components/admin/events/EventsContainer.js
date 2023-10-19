@@ -21,12 +21,7 @@ export default function EventsContainer() {
 	const [selectedEvent, setSelectedEvent] = useState(false);
 	
 	const { events, loading, error, getEvents } = useGetEvents();
-		const {
-		register,
-		handleSubmit,
-		reset,
-		formState: { errors },
-		} = useForm();
+	const { register, handleSubmit, reset, formState: { errors } } = useForm();
 		
 	useEffect(() => {
 	  getEvents()
@@ -35,22 +30,21 @@ export default function EventsContainer() {
 	//adding event
 	const addEvent = async (data) => {
 		try {
-			//clear the success flag initially
 			setSuccess(false)
 	
 			//get the form element and create a FormData object
 			const form = document.getElementById("event-form");
 			const formData = new FormData(form);
 			const eventImage = data.image_path[0];
+			
 			//append the image to the formData
 			formData.append("image_path", eventImage);
-			//send post request
+
 			const response = await axios.post("https://api2.queuing4oranges.com/events/create.php", formData);
 			
 			if (response.status === 200) {
 				swal("Well, well well...", "Seems like a new event is coming soon.", "success");
 				setSuccess(true)
-				// getEvents();
 			} else {
 				console.error("Failed to add event: Status code " + response.status);
 			}
@@ -87,7 +81,6 @@ export default function EventsContainer() {
 	};
 	
 	//editing event
-	//TODO: setSelectedEvent might need some other naming? or some prev.values thing
 	const handleEventEdit = (event) => {
 		setOpenEditModal(true);
 		setSelectedEvent(event);
@@ -121,11 +114,11 @@ export default function EventsContainer() {
 					<Card>
 						<CardBody>
 							<CardTitle>
-								<button className="btn btn-success w-100 ">
-          							<Link className="text-light" to={"/events/archive"}>
-            							All Events
-          							</Link>
-        						</button>
+          						<Link className="text-light w-100" to={"/events/archive"}>
+									<button className="btn btn-success w-100 ">
+            							Go to All Events
+        							</button>
+          						</Link>
 							</CardTitle>
 							
 							{events &&								
@@ -441,6 +434,8 @@ export default function EventsContainer() {
 				setSelectedEvent={setSelectedEvent} 
 				openEditModal={openEditModal} 
 				setOpenEditModal={setOpenEditModal} 
+				success={setSuccess}
+				setSuccess={setSuccess}
 			/>  
 			}
 
