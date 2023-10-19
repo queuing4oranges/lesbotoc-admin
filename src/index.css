@@ -18,6 +18,7 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-
-
-
+/* darker background for modal backdrops */
+.backdrop {
+	background-color: rgba(0, 0, 0, 0.5);
+}

@@ -27,13 +27,7 @@ export default function EventsContainer() {
 		reset,
 		formState: { errors },
 		} = useForm();
-	
-	
-	// const onSubmit = data => console.log(data)
-	
 		
-	// const onSubmit = data => console.log(data)
-	
 	useEffect(() => {
 	  getEvents()
 	}, [success])
@@ -161,6 +155,7 @@ export default function EventsContainer() {
 												type="button"
 												className="btn btn-sm btn-info m-1"
 												onClick={()=>handleEventEdit(event)}
+												data-bs-backdrop="static"
 												>
 												<BsPencilSquare />
 												</button>
@@ -287,15 +282,15 @@ export default function EventsContainer() {
 									
 									<div className="form-group form-floating my-2">
 										<input 
-											{...register("longtitude", {
-											required: "Add longtitude for Google Maps", 
+											{...register("longitude", {
+											required: "Add longitude for Google Maps", 
 										})} 
 											className="form-control ps-2 mt-2"
-											placeholder="Longtitude (2nd number)"
+											placeholder="Longitude (2nd number)"
 											type="text" 
 											required
 										/>
-										<label htmlFor="longitude" className="pt-2">*Longtitude (2nd number)</label>
+										<label htmlFor="longitude" className="pt-2">*Longitude (2nd number)</label>
 									</div>
 									
 									<div className="form-group form-floating my-2">

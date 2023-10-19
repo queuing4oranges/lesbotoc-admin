@@ -185,7 +185,7 @@ export default function ContactsContainer() {
 		{/* modal container for adding contact */}
 		{openModal &&
 		<div 
-			className={`modal fade${openModal ? ' show' : ''}`} 
+			className={`modal fade${openModal ? ' show backdrop' : ''}`} 
 			tabIndex="-1" 
 			id="contact-modal"
 			style={{ display: openModal ? 'block' : 'none' }}>

@@ -18,7 +18,7 @@ export default function EditModal({ contact, openEditModal, setOpenEditModal, ge
 			const response = await axios.put(`https://api2.queuing4oranges.com/contacts/update.php/${id}`, {...data, id})
 			.then(function(response) {
 				if (response.status === 200) {
-          			swal("YEAH BABY!", "You edited this Contact.", "success");
+					swal("YEAH BABY!", "You edited this Contact.", "success");
 				} else if(response.status === 500){
 					swal("Oops", "Not able to edit contact", "error")
 				}
@@ -32,7 +32,7 @@ export default function EditModal({ contact, openEditModal, setOpenEditModal, ge
 	
 	return (
 		<div 
-			className={`modal fade${openEditModal ? ' show' : ''}`} 
+			className={`modal fade${openEditModal ? ' show backdrop' : ''}`} 
 			tabIndex="-1" 
 			id="contact-modal"
 			style={{ display: openEditModal ? 'block' : 'none' }}

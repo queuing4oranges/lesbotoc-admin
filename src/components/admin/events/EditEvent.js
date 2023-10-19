@@ -1,11 +1,15 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useForm } from "react-hook-form";
+import axios from "axios";
+import swal from "sweetalert";
+
+import { GrClose } from "react-icons/gr";
 
 export default function EditEvent({ event, setSelectedEvent, openEditModal, setOpenEditModal }) {
-	const { id, name, event_type, loc_name, loc_address, loc_website, latitude, longtitude, date, time, price, capacity, image_path, image_alt, instructions, description } = event
-
+	const { id, name, event_type, loc_name, loc_address, loc_website, latitude, longitude, date, time, price, capacity, image_path, image_alt, instructions, description } = event
+	
 	console.log(event)
-
+	console.log(longitude)
 	
 	const {
 	register,
@@ -14,28 +18,52 @@ export default function EditEvent({ event, setSelectedEvent, openEditModal, setO
 	formState: { errors }
 	} = useForm({
 		defaultValues: {
-			id, name, event_type, loc_name, loc_address, loc_website, latitude, longtitude, date, time, price, capacity, image_path, image_alt, instructions, description
+			id, name, event_type, loc_name, loc_address, loc_website, latitude, longitude, date, time, price, capacity, image_path, image_alt, instructions, description
 		}
 	});
 	
-	const editEvent = (id) => {
-		//
+	const editEvent = async (data) => {
+		console.log(data)
+		console.log(latitude)
+			try {
+			const response = await axios.put(`https://api2.queuing4oranges.com/events/update.php/${id}`, {...data, id})
+			.then(function(response) {
+				if (response.status === 200) {
+					swal("YEAH BABY!", "You edited this event.", "success");
+				} else if(response.status === 500){
+					swal("Oops", "Not able to edit event", "error")
+				}
+			})
+		} catch(error) {
+			console.log("Error editing event:", error)
+		}
+		setOpenEditModal(false)
 	}
 	
 	return (
 		<div 
-			className={`modal fade${openEditModal ? ' show' : ''}`} 
+			className={`modal fade${openEditModal ? ' show backdrop' : ''}`} 
 			tabIndex="-1" 
 			id="event-modal"
 			style={{ display: openEditModal ? 'block' : 'none' }}
 		>
-			<div className="modal-dialog modal-dialog-centered">
-				<div className="modal-dialog mx-0 w-100">
+			<div className="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+				<div className="modal-dialog modal-dialog-scrollable mx-0 w-100">
 					<div className="modal-content">
 						<div className="modal-header">
-							<h5 className="modal-title">Edit a Event</h5>
+							<h5 className="modal-title">Edit an Event</h5>
+							<button
+								type="button"
+								className="btn btn-outline-warning"
+								onClick={() => {
+									reset(); 
+									setOpenEditModal(false)
+									setSelectedEvent(false)
+								}}>
+								<GrClose />
+							</button>
 						</div>
-						{/* //TODO errors-container - should not be possible to edito to empty string!											 */}
+					
 						<div className="modal-body">
 							<form 
 								onSubmit={handleSubmit(editEvent)}
@@ -56,22 +84,6 @@ export default function EditEvent({ event, setSelectedEvent, openEditModal, setO
 										maxLength={20}
 										/>
 									<label htmlFor="name" className="pt-2">*Title of the event (max. 20)</label>
-								</div>
-							
-								<div className="form-group form-floating my-2">
-									<select 
-										{...register("event_type")}
-										className="form-select m-0 py-0"
-										placeholder="Type of the event"
-										type="text"
-										style={{height: "unset"}}
-									>
-										<option defaultValue="Lesbotoc Event">Select type of event</option>
-										<option value="Lesbotoc Event">Lesbotoč Event</option>
-										<option value="Speed Dating">Speed Dating</option>
-										<option value="Other Event">Other Event</option>
-										<option value="Lesbotoc Camp">Lesbotoč Camp</option>
-									</select>
 								</div>
 
 								<div className="form-group form-floating my-2">
@@ -109,15 +121,15 @@ export default function EditEvent({ event, setSelectedEvent, openEditModal, setO
 									
 								<div className="form-group form-floating my-2">
 									<input 
-										{...register("longtitude", {
-										required: "Add longtitude for Google Maps", 
+										{...register("longitude", {
+										required: "Add longitude for Google Maps", 
 										})} 
 										className="form-control ps-2 mt-2"
-										placeholder="Longtitude (2nd number)"
+										placeholder="Longitude (2nd number)"
 										type="text" 
 										required
 									/>
-									<label htmlFor="longitude" className="pt-2">*Longtitude (2nd number)</label>
+									<label htmlFor="longitude" className="pt-2">*Longitude (2nd number)</label>
 								</div>
 									
 								<div className="form-group form-floating my-2">
@@ -219,7 +231,7 @@ export default function EditEvent({ event, setSelectedEvent, openEditModal, setO
 										type="submit" 
 										className="btn btn-success"
 									>
-									Save new event
+									Save
 									</button>
 								</div>
 									
