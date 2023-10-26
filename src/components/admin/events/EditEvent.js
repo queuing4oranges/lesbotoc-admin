@@ -5,7 +5,7 @@ import swal from "sweetalert";
 
 import { GrClose } from "react-icons/gr";
 
-export default function EditEvent({ event, setSelectedEvent, openEditModal, setOpenEditModal, success, setSuccess }) {
+export default function EditEvent({ event, setSelectedEvent, openEditModal, setOpenEditModal, setSuccess }) {
 	const { id, name, event_type, loc_name, loc_address, loc_website, latitude, longitude, date, time, price, capacity, image_path, image_alt, instructions, description } = event
 	
 	const {
@@ -20,6 +20,7 @@ export default function EditEvent({ event, setSelectedEvent, openEditModal, setO
 	});
 	
 	const editEvent = async (data) => {
+		setSuccess(false)
 		try {
 		const response = await axios.put(`https://api2.queuing4oranges.com/events/update.php/${id}`, {...data, id})
 		.then(function(response) {

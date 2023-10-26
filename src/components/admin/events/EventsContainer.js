@@ -20,7 +20,7 @@ export default function EventsContainer() {
 	const [openEditModal, setOpenEditModal] = useState(false);
 	const [selectedEvent, setSelectedEvent] = useState(false);
 	
-	const { events, loading, error, getEvents } = useGetEvents();
+	const { events, error, getEvents } = useGetEvents();
 	const { register, handleSubmit, reset, formState: { errors } } = useForm();
 		
 	useEffect(() => {
@@ -86,15 +86,9 @@ export default function EventsContainer() {
 	const handleEventEdit = (event) => {
 		setOpenEditModal(true);
 		setSelectedEvent(event);
+		// setSuccess(false);
 	}
 	
-	
-	//display loading
-	if (loading) { 
-		return (
-		<div style={{ display: "flex", justifyContent: "center", alignItems: "center", marginTop: "200"}}>Bear with me. I'm crunching your data....</div>)
-	}
-
 	//display error in loading data
 	if (error) {
 		<div>Couldn't get list of events. Sorry...</div>;
