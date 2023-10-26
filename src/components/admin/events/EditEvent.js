@@ -5,7 +5,7 @@ import swal from "sweetalert";
 
 import { GrClose } from "react-icons/gr";
 
-export default function EditEvent({ event, setSelectedEvent, openEditModal, setOpenEditModal, setSuccess }) {
+export default function EditEvent({ event, setSelectedEvent, openEditModal, setOpenEditModal, success, setSuccess }) {
 	const { id, name, event_type, loc_name, loc_address, loc_website, latitude, longitude, date, time, price, capacity, image_path, image_alt, instructions, description } = event
 	
 	const {
@@ -34,6 +34,7 @@ export default function EditEvent({ event, setSelectedEvent, openEditModal, setO
 		}
 		setOpenEditModal(false)
 		setSuccess(true)
+
 	}
 	
 	return (
@@ -59,7 +60,7 @@ export default function EditEvent({ event, setSelectedEvent, openEditModal, setO
 								<GrClose />
 							</button>
 						</div>
-					
+					{/* TODO : make COL and ROW from reactstrap - delete obsolete scss  */}
 						<div className="modal-body">
 							<form 
 								onSubmit={handleSubmit(editEvent)}

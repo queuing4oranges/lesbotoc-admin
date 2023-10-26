@@ -44,7 +44,40 @@ FOR MOBILES
 -------------------------------*/
 @media (max-width: 600px) {
 
+	//EventsArchive
 	.events-archive-table .hide {
 		display: none;
 	}
+	
+	//EventsContainer
+	//adding event
+	.add-event-card {
+		margin-top: 1em;
+		
+		& .add-event-title {
+			display: flex;
+			flex-direction: column;
+
+			& h5 {
+				margin-top: 1em !important;
+			}
+		}
+		
+		& form {
+			display: flex;
+			flex-direction: column;
+		}
+		
+		& hr {
+			display: none;
+		}
+		
+		& .add-event-container {
+			display: flex;
+			flex-direction: column;
+		}
+
+
+	}
+	
 }

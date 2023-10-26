@@ -29,6 +29,7 @@ export default function EventsContainer() {
 
 	//adding event
 	const addEvent = async (data) => {
+		console.log(data)
 		try {
 			setSuccess(false)
 	
@@ -44,14 +45,15 @@ export default function EventsContainer() {
 			
 			if (response.status === 200) {
 				swal("Well, well well...", "Seems like a new event is coming soon.", "success");
-				setSuccess(true)
+
 			} else {
 				console.error("Failed to add event: Status code " + response.status);
 			}
 		} catch (error) {
 			console.error("Error adding event:", error);
 		} finally {
-			reset();		
+			reset();					
+			setSuccess(true)	
 		}
 	}
 	
@@ -90,7 +92,7 @@ export default function EventsContainer() {
 	//display loading
 	if (loading) { 
 		return (
-		<div style={{ display: "flex", justifyContent: "center", alignItems: "center"}}>Bear with me. I'm crunching your data....</div>)
+		<div style={{ display: "flex", justifyContent: "center", alignItems: "center", marginTop: "200"}}>Bear with me. I'm crunching your data....</div>)
 	}
 
 	//display error in loading data
@@ -174,7 +176,7 @@ export default function EventsContainer() {
 				</Col>
 				
 				{/* adding events */}
-				<Col md="9" >
+				<Col md="9">
 					<Card className="px-3 add-event-card">
 
 						<form 
@@ -185,8 +187,8 @@ export default function EventsContainer() {
 							autoComplete="on"
 							>
 								
-							<CardTitle className="d-flex align-items-center">
-								<h5 className="mt-1 p-3">Add an event:</h5>
+							<CardTitle className="d-flex align-items-center add-event-title">
+								<h5 className="mt-1 p-3">Add an event</h5>
 							
 								<div className="form-group form-floating my-2">
 									<input

@@ -38,6 +38,7 @@ thead .table-hr {
   text-align: left;
 }
 
+//TODO: get rid of table classnames - instead use ".contacts-table .hide"
 //responsive
 @media (max-width: 600px) {
   .col-wherefrom,

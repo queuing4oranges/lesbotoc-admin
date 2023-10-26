@@ -10,7 +10,7 @@ export default function Searchbar({ contacts, handleContactEdit }) {
 		setNameInput(searchName);
 
 	const newFilter = contacts.filter((value) => {
-		return value.name.toLowerCase().includes(searchName.toLowerCase()); //if the value incl the search word, we want to keep/return it
+		return value.name.toLowerCase().includes(searchName.toLowerCase()); //if the value incl the search word - return it
 		});
 		
 		if (searchName === "") {
