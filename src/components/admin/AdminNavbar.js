@@ -11,7 +11,7 @@ export default function AdminNavbar() {
 				className="container navbar navbar-expand-md m-auto blue-green-bg p-2"
 				style={{ width: "90vw" }}
 			>
-			<div className="container-fluid p-0">
+			<div className="container-fluid px-2">
 				<a
 					className="navbar-brand text-light"
 					href="https://www.lesbotoc.cz"

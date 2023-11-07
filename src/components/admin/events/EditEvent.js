@@ -212,7 +212,7 @@ export default function EditEvent({ event, setSelectedEvent, openEditModal, setO
 									<label htmlFor="description" className="pt-2">*Description of the event</label>
 								</div>
 								
-								<div className="d-flex justify-content-between">
+								<div className="modal-footer">
 									
 									<button
 										type="button"

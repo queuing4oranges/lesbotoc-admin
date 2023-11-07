@@ -191,7 +191,7 @@ export default function ContactsContainer() {
 			style={{ display: openModal ? 'block' : 'none' }}>
 			<div className="modal-dialog modal-dialog-centered">
 				<div className="modal-content">
-					<div className="modal-header  d-flex flex-column pb-3 align-items-center">
+					<div className="modal-header d-flex flex-column pb-3 align-items-center">
 						<h5 className="modal-title">Add a Contact</h5>
 						<div className="error-container">
 							{errors ? (
