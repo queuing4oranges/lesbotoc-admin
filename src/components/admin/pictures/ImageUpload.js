@@ -1,33 +1,26 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import AdminNavbar from "../AdminNavbar";
 import { useForm } from "react-hook-form";
 import swal from "sweetalert";
 import Moment from "react-moment";
-import PictureModal from "./PictureModal";
-import ReportBug from "../../includes/ReportBug";
 import { Container } from "reactstrap";
-import { BsTrash } from "react-icons/bs";
+import { BsTrash, BsArrowRight } from "react-icons/bs";
+
+import AdminNavbar from "../AdminNavbar";
+import ReportBug from "../../includes/ReportBug";
+
 
 export default function ImageUpload() {
 	const [success, setSuccess] = useState(false);
 	const [openModal, setOpenModal] = useState(false);
-	
 	const [images, setImages] = useState("");
-	const [picLoaded, setPicLoaded] = useState(false);
-	const [pic, setPic] = useState("");
-	const {
-		register,
-		handleSubmit,
-		reset,
-		formState: { errors },
-		} = useForm();
+	const { register, handleSubmit, reset } = useForm();
 
 	useEffect(() => {
 		getImages();
 	}, [success]);
 	
-	//displaying images from images folder via DB path
+	//displaying images (from images folder via image_path)
 	const getImages = () => {
 		axios.get("https://api2.queuing4oranges.com/images/read.php")
 		.then(function (response) {
@@ -60,56 +53,28 @@ export default function ImageUpload() {
 		}
 	}
 
-// const toggleShowAdd = () => {
-// showAdd === false ? setShowAdd(true) : setShowAdd(false);
-// if (showAdd === false) {
-// setShowAdd(true);
-// setButtonText("Cancel");
-// } else {
-// setShowAdd(false);
-// setButtonText("Add Image");
-// }
-// };
-
-
-
-//deleting single image
-const deleteImage = (id) => {
-// setsuccessMsg(false);
-swal({
-title: "Dont like that image?",
-text: "Let's get rid of it!",
-icon: "warning",
-dangerMode: true,
-}).then((willDelete) => {
-if (willDelete) {
-axios
-.delete(`https://api2.queuing4oranges.com/images/delete.php/${id}`)
-.then(function (response) {
-if (response.status === 200) {
-swal("Deleted", "Dont ever worry about it.", "success");
-// setsuccessMsg(true);
-} else if (response.status === 500) {
-swal("Wellllllll...", "Something went wrong here.", "error");
-}
-});
-}
-});
-};
-
-// //displaying single image on click
-// const showOnePic = (id) => {
-// // setOpenModal(true);
-// console.log(id);
-// axios
-// .get(`https://api2.queuing4oranges.com/images/single_pic.php/${id}`)
-// .then(function (response) {
-// setPic(response.data);
-// })
-// .then(function () {
-// setPicLoaded(true);
-// });
-// };
+	//deleting single image
+	const deleteImage = (id) => {
+		setSuccess(false);
+			swal({
+			title: "Dont like that image?",
+			text: "Let's get rid of it!",
+			icon: "warning",
+			dangerMode: true,
+			}).then((willDelete) => {
+				if (willDelete) {
+					axios.delete(`https://api2.queuing4oranges.com/images/delete.php/${id}`)
+						.then(function (response) {
+							if (response.status === 200) {
+								swal("Deleted", "Dont ever worry about it.", "success");
+								setSuccess(true);
+							} else if (response.status === 500) {
+								swal("Hm...", "Something went wrong here.", "error");
+							}
+						});
+				}
+			});
+	};
 
 	return (
 		<>
@@ -119,14 +84,22 @@ swal("Wellllllll...", "Something went wrong here.", "error");
 					<h3 className="w-90 mt-3 d-flex mb-3">Picture Gallery</h3>
 				</div>
 
-			<Container className="d-flex flex-column align-items-between">
-				<div className="add-img-btn-cont">
+			<Container className="d-flex flex-column align-items-center">
+				<div className="w-100 d-flex flex-column align-items-start add-image-header">
 					<button
-						className="btn btn-success btn-create btn-sm image-upload-btn"
+						className="btn btn-success btn-sm image-upload-btn"
 						onClick={()=>setOpenModal(!openModal)}
 					>
 					Add Image
 					</button>
+					<br />
+					<span className="d-flex align-items-center">
+						<p className="my-0 me-3 text-success">For best performace, choose image in landscape, max. 100kb in jpeg, jpg, png, gif format</p>
+						<BsArrowRight/>
+						<button className="btn btn-outline-info btn-sm ms-3">
+							<a className="text-danger" href="https://imagecompressor.com/" target="_blank" rel="noreferrer">Online Image Compressor</a>
+						</button>
+					</span>
 				</div>
 				
 			{/* // add an image   */}
@@ -141,7 +114,6 @@ swal("Wellllllll...", "Something went wrong here.", "error");
 							<div className="modal-header d-flex flex-column pb-3 align-items-center">
 								<h5 className="modal-title">Add a Picture</h5>
 							</div>
-							{/* TODO: make error container here */}
 							
 							<div className="modal-body">
 								<form
@@ -176,7 +148,6 @@ swal("Wellllllll...", "Something went wrong here.", "error");
 											required: "Please add an image.",
 											})}
 										/>
-										{/* TODO <label htmlFor="image">Image(max. 300kb/ landscape / jpeg, jpg, png, gif)</label> */}
 									</div>
 									
 									<div className="form-group mx-1 mb-3 form-floating">
@@ -223,33 +194,14 @@ swal("Wellllllll...", "Something went wrong here.", "error");
 				</div>
 			}
 
-				{/*TODO <div className="image-compressor-container">
-				{" "}
-				<a
-				href="https://imagecompressor.com/"
-				target="_blank"
-				rel="noreferrer"
-				>
-				Online Image Compressor
-				</a>
-				</div> */}
-	
-
-<PictureModal
-pic={pic}
-setPicLoaded={setPicLoaded}
-picLoaded={picLoaded}/>
-		
-
 			{/* display images */}
 			{images && 
-				<div className="image-container justify-content-between mt-3"> 
+				<div className="w-100 images-wrapper mt-3 d-flex flex-wrap justify-content-between"> 
 					{images.map((img, key) => (
-					<div className="image-card" key={key}>
+					<div className="image-card mb-4" key={key}>
 						<img
 							alt={`${img.filename}`}
 							src={`https://api2.queuing4oranges.com/images/images/${img.filename}`}
-							// onClick={() => showOnePic(img.id)}
 						/>
 						
 						<div className="d-inline w-100 ps-4">
@@ -260,7 +212,6 @@ picLoaded={picLoaded}/>
 							</div>
 							
 							<button
-								// name="deleteBtn"
 								className="btn btn-sm btn-danger img-btn"
 								id={img.id}
 								onClick={() => deleteImage(img.id)}
