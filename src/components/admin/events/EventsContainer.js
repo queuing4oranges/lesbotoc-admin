@@ -16,7 +16,7 @@ import { useGetEvents } from "../../customHooks";
 import EditEvent from "./EditEvent";
 
 export default function EventsContainer() {
-	const [success, setSuccess]=useState(false)
+	const [success, setSuccess] = useState(false)
 	const [openEditModal, setOpenEditModal] = useState(false);
 	const [selectedEvent, setSelectedEvent] = useState(false);
 	
@@ -29,7 +29,6 @@ export default function EventsContainer() {
 
 	//adding event
 	const addEvent = async (data) => {
-		console.log(data)
 		try {
 			setSuccess(false)
 	
@@ -45,7 +44,6 @@ export default function EventsContainer() {
 			
 			if (response.status === 200) {
 				swal("Well, well well...", "Seems like a new event is coming soon.", "success");
-
 			} else {
 				console.error("Failed to add event: Status code " + response.status);
 			}
@@ -174,7 +172,7 @@ export default function EventsContainer() {
 					<Card className="px-3 add-event-card">
 
 						<form 
-							className="event-form  d-flex flex-column align-items-center"
+							className="event-form d-flex flex-column align-items-center"
 							onSubmit={handleSubmit(addEvent)}
 							encType="multipart/form-data"
 							id="event-form"

@@ -10,14 +10,13 @@ import { Container } from "reactstrap";
 import { BsTrash } from "react-icons/bs";
 
 export default function ImageUpload() {
+	const [success, setSuccess] = useState(false);
 	const [openModal, setOpenModal] = useState(false);
-	const [buttonText, setButtonText] = useState("Add Image");
-	const [successMsg, setsuccessMsg] = useState(false);
+	
 	const [images, setImages] = useState("");
-	const [imagesLoaded, setImagesLoaded] = useState(false);
 	const [picLoaded, setPicLoaded] = useState(false);
 	const [pic, setPic] = useState("");
-		const {
+	const {
 		register,
 		handleSubmit,
 		reset,
@@ -26,50 +25,40 @@ export default function ImageUpload() {
 
 	useEffect(() => {
 		getImages();
-	}, [successMsg]);
+	}, [success]);
 	
 	//displaying images from images folder via DB path
 	const getImages = () => {
 		axios.get("https://api2.queuing4oranges.com/images/read.php")
 		.then(function (response) {
 			setImages(response.data);
-			setImagesLoaded(true);
 		});
 	};
 	
+	//uploading images to the DB
+	const uploadImage = async (data) => {
+		setSuccess(false);
+		try {
+			const form = document.getElementById("image-form");
+			const formData = new FormData(form);
+			const image = data.image[0];
 
-//uploading images to the DB
-const uploadImage = (e) => {
-setsuccessMsg(false);
-e.preventDefault();
-
-const form = document.getElementById("form");
-const formData = new FormData(form);
-
-//preventing request to be sent without image
-const formImage = document.getElementById("image");
-if (!formImage.value) {
-console.log("there is no pic");
-} else {
-axios
-.post("https://api2.queuing4oranges.com/images/upload.php", formData)
-.then(function (response) {
-if (response.status === 200) {
-swal("YEAH BABY!", "You uploaded an image.", "success");
-setsuccessMsg(true);
-// toggleShowAdd();
-} else if (response.status === 500) {
-swal("Wellllllll...", "Something went wrong here.", "error");
-}
-})
-.catch((err) => {
-console.log(err);
-});
-}
-setImagesLoaded(true);
-};
-
-
+			formData.append("image", image);
+			const response = await axios.post("https://api2.queuing4oranges.com/images/upload.php", formData);
+				if (response.status === 200) {
+					swal("YEAH BABY!", "You uploaded an image.", "success");
+				} else {
+					console.error("Failed to upload image: Status code " + response.status);
+				}
+				
+		} catch (error) {
+			console.error("Failed to upload image: ", error);
+		} finally {
+			reset();
+			setSuccess(true)
+			setOpenModal(false)
+		}
+	}
 
 // const toggleShowAdd = () => {
 // showAdd === false ? setShowAdd(true) : setShowAdd(false);
@@ -84,29 +73,29 @@ setImagesLoaded(true);
 
 
 
-// //deleting single image
-// const deleteImage = (id) => {
+//deleting single image
+const deleteImage = (id) => {
 // setsuccessMsg(false);
-// swal({
-// title: "Dont like that image?",
-// text: "Let's get rid of it!",
-// icon: "warning",
-// dangerMode: true,
-// }).then((willDelete) => {
-// if (willDelete) {
-// axios
-// .delete(`https://api2.queuing4oranges.com/images/delete.php/${id}`)
-// .then(function (response) {
-// if (response.status === 200) {
-// swal("Deleted", "Dont ever worry about it.", "success");
+swal({
+title: "Dont like that image?",
+text: "Let's get rid of it!",
+icon: "warning",
+dangerMode: true,
+}).then((willDelete) => {
+if (willDelete) {
+axios
+.delete(`https://api2.queuing4oranges.com/images/delete.php/${id}`)
+.then(function (response) {
+if (response.status === 200) {
+swal("Deleted", "Dont ever worry about it.", "success");
 // setsuccessMsg(true);
-// } else if (response.status === 500) {
-// swal("Wellllllll...", "Something went wrong here.", "error");
-// }
-// });
-// }
-// });
-// };
+} else if (response.status === 500) {
+swal("Wellllllll...", "Something went wrong here.", "error");
+}
+});
+}
+});
+};
 
 // //displaying single image on click
 // const showOnePic = (id) => {
@@ -136,7 +125,7 @@ setImagesLoaded(true);
 						className="btn btn-success btn-create btn-sm image-upload-btn"
 						onClick={()=>setOpenModal(!openModal)}
 					>
-					{buttonText}
+					Add Image
 					</button>
 				</div>
 				
@@ -145,35 +134,35 @@ setImagesLoaded(true);
 				<div 
 					className={`modal fade${openModal ? ' show backdrop' : ''}`} 
 					tabIndex="-1" 
-					id="contact-modal"
+					id="image-modal"
 					style={{ display: openModal ? 'block' : 'none' }}>
 					<div className="modal-dialog modal-dialog-centered">
 						<div className="modal-content">
 							<div className="modal-header d-flex flex-column pb-3 align-items-center">
 								<h5 className="modal-title">Add a Picture</h5>
 							</div>
+							{/* TODO: make error container here */}
 							
 							<div className="modal-body">
 								<form
-									// onSubmit={handleSubmit(addContact)}
-									className=" contact-form p-3"
-									onSubmit={uploadImage}
-									id="form"
+									className="image-form p-3"
+									onSubmit={handleSubmit(uploadImage)}
+									id="image-form"
 									encType="multipart/form-data"
 								>
 									<div className="form-group mx-1 mb-3 form-floating">
-									<input
-										id="title"
-										name="title"
-										className="form-control"
-										placeholder="Title - max 20 char"
-										type="text"
-										{...register("title", {
-										required: "Please add a name.",
-										})}
-										maxLength={20}
-									/>
-									<label htmlFor="title">Title of Pic</label>
+										<input
+											id="title"
+											name="title"
+											className="form-control"
+											placeholder="Title - max 20 char"
+											type="text"
+											{...register("title", {
+											required: "Please add a title.",
+											})}
+											maxLength={20}
+										/>
+										<label htmlFor="title" className="text-muted small">Title of Pic</label>
 									</div>
 							
 									<div className="form-group mx-1 mb-3 form-floating">
@@ -187,7 +176,7 @@ setImagesLoaded(true);
 											required: "Please add an image.",
 											})}
 										/>
-										{/* <label htmlFor="image">Image(max. 300kb/ landscape / jpeg, jpg, png, gif)</label> */}
+										{/* TODO <label htmlFor="image">Image(max. 300kb/ landscape / jpeg, jpg, png, gif)</label> */}
 									</div>
 									
 									<div className="form-group mx-1 mb-3 form-floating">
@@ -198,10 +187,10 @@ setImagesLoaded(true);
 											className="form-control"
 											placeholder="alternate text"
 											{...register("alt", {
-											required: "Please add a name.",
+											required: "Please add an alternate text.",
 											})}
 										/>
-										<label htmlFor="alt">Description for screen reader</label>
+										<label htmlFor="alt" className="text-muted small">Description for screen reader</label>
 									</div>
 										
 									
@@ -222,7 +211,7 @@ setImagesLoaded(true);
 											className="btn btn-success" 
 											type="submit" 
 											data-bs-dismiss="modal">
-										Save
+										Upload
 										</button>
 									</div>
 										
@@ -234,16 +223,16 @@ setImagesLoaded(true);
 				</div>
 			}
 
-{/* <div className="image-compressor-container">
-{" "}
-<a
-href="https://imagecompressor.com/"
-target="_blank"
-rel="noreferrer"
->
-Online Image Compressor
-</a>
-</div> */}
+				{/*TODO <div className="image-compressor-container">
+				{" "}
+				<a
+				href="https://imagecompressor.com/"
+				target="_blank"
+				rel="noreferrer"
+				>
+				Online Image Compressor
+				</a>
+				</div> */}
 	
 
 <PictureModal
@@ -253,7 +242,7 @@ picLoaded={picLoaded}/>
 		
 
 			{/* display images */}
-			{imagesLoaded && 
+			{images && 
 				<div className="image-container justify-content-between mt-3"> 
 					{images.map((img, key) => (
 					<div className="image-card" key={key}>
@@ -274,7 +263,7 @@ picLoaded={picLoaded}/>
 								// name="deleteBtn"
 								className="btn btn-sm btn-danger img-btn"
 								id={img.id}
-								// onClick={() => deleteImage(img.id)}
+								onClick={() => deleteImage(img.id)}
 							>
 								<BsTrash />
 							</button>
