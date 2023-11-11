@@ -1,48 +1,37 @@
-.admin-panel-btn {
-  width: 200px;
-  height: 200px;
-  border-radius: 50%;
-  color: orange;
-  $box-shadow: 0px 10px 15px -5px rgba(228, 241, 151, 0.75);
-}
 .admin-login-form {
-  background-color: $user-beige-light;
-  z-index: 2;
-  max-width: 600px;
-  max-height: fit-content;
-  padding: 40px 50px;
+	background-color: $user-beige-light;
+	z-index: 2;
 }
-.admin-login-container {
-  height: 100vh;
-  width: 100%;
-  position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: center;
 
-  &::before {
-    content: "";
-    background-image: url(../../src/assets/admin-login-background.jpg);
-    background-size: cover;
-    opacity: 0.2;
-    position: absolute;
-    top: 0px;
-    right: 0px;
-    bottom: 0px;
-    left: 0px;
-    pointer-events: none; //makes input still clickable
-  }
+.admin-login-container {
+	position: relative;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+
+	&::before {
+		content: "";
+		background-image: url(../../src/assets/admin-login-background.jpg);
+		background-size: cover;
+		opacity: 0.2;
+		position: absolute;
+		top: 0px;
+		right: 0px;
+		bottom: 0px;
+		left: 0px;
+		pointer-events: none; //makes input still clickable
+	}
 }
 
 .login-button {
-  width: 100px;
-  height: 100px;
-  border-radius: 50%;
-  background-color: transparent;
-  color: $lesbotoc-dark;
-  border: 3px solid pink;
-  &:hover {
-    background-color: $user-beige-light;
-    color: pink;
-  }
+	width: 100px;
+	height: 100px;
+	border-radius: 50%;
+	background-color: transparent;
+	color: $lesbotoc-dark;
+	border: 3px solid pink;
+		&:hover {
+			background-color: $user-beige-light;
+			color: pink;
+		}
 }

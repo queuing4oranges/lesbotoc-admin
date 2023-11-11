@@ -3,82 +3,78 @@ import emailjs from "@emailjs/browser";
 import { serviceId, templateId, publicKey } from "./variables";
 import swal from "sweetalert";
 
-//icons
-import Bug from "../../assets/svg-icons/Bug";
-import Close from "../../assets/svg-icons/Close";
+import { AiOutlineClose, AiFillBug } from "react-icons/ai";
+
+import { Card, CardHeader, CardBody } from "reactstrap";
 
 export default function ReportBug() {
-  const form = useRef();
-  const [showBugReport, setShowBugReport] = useState(false);
-  const [showBug, setShowBug] = useState(true);
+	const form = useRef();
+	const [showBugReport, setShowBugReport] = useState(false);
+	const [showBug, setShowBug] = useState(true);
 
-  const sendBugReport = (e) => {
-    e.preventDefault();
+	useEffect(() => {
+		if (showBugReport) {
+			document.querySelector("#bugformCont").classList.add("slide-in-right");
+		}
+	}, [showBugReport]);
+	
+	const sendBugReport = (e) => {
+		e.preventDefault();
+		//TODO - does emailjs still work here?
+	emailjs.sendForm(serviceId, templateId, form.current, publicKey).then(
+	(result) => {
+	console.log(result.text);
+	e.target.reset();
+	},
+	(error) => {
+	console.log(error.text);
+	}
+	);
+	swal(
+	"Thank you!",
+	"Feedback is the breakfast for champions. (Ken Blanchard)",
+	"success"
+	);
+	setShowBugReport(false);
+	setShowBug(true);
+	};
 
-    emailjs.sendForm(serviceId, templateId, form.current, publicKey).then(
-      (result) => {
-        console.log(result.text);
-        e.target.reset();
-      },
-      (error) => {
-        console.log(error.text);
-      }
-    );
-    swal(
-      "Thank you!",
-      "Feedback is the breakfast for champions. (Ken Blanchard)",
-      "success"
-    );
-    setShowBugReport(false);
-    setShowBug(true);
-  };
+	const openForm = () => {
+		if (!showBugReport) {
+			setShowBugReport(true);
+			setShowBug(false);
+		} else {
+			setShowBugReport(false);
+			setShowBug(true);
+		}
+	};
 
-  useEffect(() => {
-    if (showBugReport === true) {
-      document.querySelector("#bugformCont").classList.add("slide-in-right");
-    }
-  }, [showBugReport]);
+	return (
+	<div className="report-container">
+		{showBugReport && (
+			<Card className="bug-form-cont" id="bugformCont">
+				<CardHeader className="d-flex flex-column justify-content-center p-3">
+					<p className="text-center text-warning">Found a bug? <AiFillBug/></p>
+					<p className="text-center text-warning">Let me know about it!</p> 
+				</CardHeader>
+				
+				<CardBody>
+					<form ref={form} onSubmit={sendBugReport}>
+						<div className="close-x" onClick={openForm}><AiOutlineClose /></div>
 
-  const openForm = () => {
-    if (showBugReport === false) {
-      setShowBugReport(true);
-      setShowBug(false);
-    } else {
-      setShowBugReport(false);
-      setShowBug(true);
-    }
-  };
+						<textarea name="report" required minLength="5" />
 
-  return (
-    <div className="report-container">
-      {showBugReport && (
-        <div className="bug-form-cont" id="bugformCont">
-          <form ref={form} onSubmit={sendBugReport}>
-            <div className="close-x" onClick={openForm}>
-              <Close width={30} height={30} fill="white" />
-            </div>
+						<button className="btn btn-info btn-sm w-50 mt-3" type="submit">Send</button>
+					</form>
+				</CardBody>
+		</Card>
+		)}
 
-            <h6 className="bug-title">Found a bug?</h6>
-
-            <h6 className="bug-title">Let me know about it!</h6>
-
-            <label className="bug-label"></label>
-            <textarea name="report" required minLength="5" />
-
-            <button className="btn btn-info btn-sm bug-btn" type="submit">
-              Send
-            </button>
-          </form>
-        </div>
-      )}
-
-      <div className="report-bug-cont">
-        {showBug && (
-          <div className="bug-cont" onClick={openForm}>
-            <Bug width={20} height={20} fill="white" />
-          </div>
-        )}
-      </div>
-    </div>
-  );
+		<div className="report-bug-cont">
+			{showBug && (
+				<div className="bug-cont" onClick={openForm}><AiFillBug /></div>
+			)}
+		</div>
+	</div>
+	);
 }

@@ -20,11 +20,8 @@ export default function EventsArchive() {
 	const [selectedEvent, setSelectedEvent] = useState(false);
 	const [success, setSuccess] = useState(false);
 	
-	const { events, loading, error, getEvents } = useGetEvents();
+	const { events, getEvents } = useGetEvents();
 	
-
-
-
 	useEffect(() => {
 		getEvents();
 	}, [success]);
@@ -73,10 +70,10 @@ export default function EventsArchive() {
 				<Row>
 					<Col>
 						<Card>
-							<CardBody>
-								
-								{events && (
-									<div>
+							{events && (
+								<CardBody>
+									<div  className="table-responsive">
+										
 										<table className="table table-sm table-bordered events-archive-table">
 											<thead>
 												<tr>
@@ -93,7 +90,7 @@ export default function EventsArchive() {
 												</tr>
 											</thead>
 
-											<tbody className="table-body">
+											<tbody className="table-body table-hover">
 												{events.map((event, key) => (
 												<tr className="table-row" key={key}>
 													{/* TODO: which td are actually needed for responsivness? */}
@@ -103,7 +100,7 @@ export default function EventsArchive() {
 													<td className="td hide">{event.loc_website}</td>
 													<td className="td">
 														{event.date === "0000-00-00" ? (
-														""
+															""
 														) : (
 														<Moment format="D. MMMM YYYY">{event.date}</Moment>
 														)}
@@ -132,7 +129,7 @@ export default function EventsArchive() {
 															className="btn btn-sm btn-danger"
 															id={event.id}
 															onClick={() => deleteEvent(event.id)}
-														>
+															>
 															<BsTrash />
 														</button>
 													</td>
@@ -141,10 +138,8 @@ export default function EventsArchive() {
 											</tbody>
 										</table>
 									</div>
-								)}
-
-								
-							</CardBody>
+								</CardBody>
+							)}
 						</Card>
 					</Col>
 				</Row>

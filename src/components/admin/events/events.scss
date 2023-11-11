@@ -52,32 +52,6 @@ FOR MOBILES
 	//EventsContainer
 	//adding event
 	.add-event-card {
-		margin-top: 1em;
-		
-		& .add-event-title {
-			display: flex;
-			flex-direction: column;
-
-			& h5 {
-				margin-top: 1em !important;
-			}
-		}
-		
-		& form {
-			display: flex;
-			flex-direction: column;
-		}
-		
-		& hr {
-			display: none;
-		}
-		
-		& .add-event-container {
-			display: flex;
-			flex-direction: column;
-		}
-
-
+		display: none;
 	}
-	
 }

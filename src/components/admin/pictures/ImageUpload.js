@@ -96,8 +96,8 @@ export default function ImageUpload() {
 					<span className="d-flex align-items-center">
 						<p className="my-0 me-3 text-success">For best performace, choose image in landscape, max. 100kb in jpeg, jpg, png, gif format</p>
 						<BsArrowRight/>
-						<button className="btn btn-outline-info btn-sm ms-3">
-							<a className="text-danger" href="https://imagecompressor.com/" target="_blank" rel="noreferrer">Online Image Compressor</a>
+						<button className="btn btn-outline-success btn-sm ms-3">
+							<a className="text-warning" href="https://imagecompressor.com/" target="_blank" rel="noreferrer">Online Image Compressor</a>
 						</button>
 					</span>
 				</div>

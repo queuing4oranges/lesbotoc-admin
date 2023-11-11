@@ -1,60 +1,44 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { Form, FormText, FormGroup, Label, Input, Button } from "reactstrap";
 
 export default function AdminLogin() {
-  return (
-    <div className="user-title-container admin-login-container">
-      <form className="admin-login-form" action="">
-        <h3>Welcome back!</h3>
-        <div className="mb-3">
-          <label htmlFor="exampleFormControlInput1" className="form-label">
-            Full Name
-          </label>
-          <input
-            type="text"
-            className="form-control"
-            id="exampleFormControlInput1"
-            placeholder="Ivana Novaková"
-          />
-        </div>
-
-        <div className="mb-3">
-          <label htmlFor="exampleFormControlInput1" className="form-label">
-            Username
-          </label>
-          <input
-            type="text"
-            className="form-control"
-            id="exampleFormControlInput2"
-            placeholder="El Bosso"
-          />
-        </div>
-
-        <div className="mb-3">
-          <label htmlFor="exampleFormControlInput1" className="form-label">
-            Password
-          </label>
-          <input
-            type="password"
-            className="form-control"
-            id="exampleFormControlInput3"
-          />
-        </div>
-
-        <div className="col-auto">
-          <button type="submit" className="btn btn-primary mb-3 login-button">
-            Login
-          </button>
-        </div>
-
-        <div className="col-auto">
-          <Link to={"/contacts"}>
-            <button type="submit" className="btn btn-primary mb-3 ">
-              Login as Guest Admin
-            </button>
-          </Link>
-        </div>
-      </form>
-    </div>
-  );
+	return (
+	<div className="user-title-container admin-login-container h-100">
+		<Form className="admin-login-form p-5 d-flex flex-column align-items-center" action="">
+			<FormText>
+				<h3 className="mb-3 text-primary">Welcome back!</h3>
+    		</FormText>	
+			
+			<FormGroup>
+				<Label htmlFor="adminUsername">Username</Label>
+				<Input
+					type="text"
+					id="adminUsername"
+					placeholder="El Bosso"
+				/>
+			</FormGroup>
+			
+			<FormGroup>
+				<Label htmlFor="adminUsername">Password</Label>
+				<Input
+					type="password"
+					id="adminPassword"
+				/>
+			</FormGroup>
+			
+			<div className="d-flex justify-content-center w-100">
+				<Button className="login-button" color="primary">Login</Button>
+			</div>
+				
+			<div className="col-auto">
+				<Link to={"/contacts"}>
+					<Button type="submit" color="primary" className="mt-3">
+						Login as Guest Admin
+					</Button>
+				</Link>
+			</div>	
+		</Form>
+	</div>
+	);
 }

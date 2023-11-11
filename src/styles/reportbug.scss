@@ -1,5 +1,5 @@
 @import url("https://fonts.googleapis.com/css2?family=Permanent+Marker&display=swap");
-
+//TODO change spaces to tabs
 .report-container {
   display: flex;
   flex-direction: column;
@@ -23,6 +23,9 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  & svg {
+	color: white;
+  }
 }
 
 .bug-cont .rep-bug {
@@ -59,18 +62,6 @@
     color: white;
   }
 
-  & .bug-title {
-    margin: 15px auto 10px;
-    width: 80%;
-    font-family: "Permanent Marker", cursive, Arial, Helvetica, sans-serif;
-    letter-spacing: 0.5em;
-  }
-
-  & .bug-title-cont {
-    display: flex;
-    flex-direction: row;
-    position: relative;
-  }
 
   & textarea {
     resize: none;
@@ -159,7 +150,7 @@
 }
 
 /*animation for bug wiggle*/
-.rep-bug:hover {
+.bug-cont:hover {
   -webkit-animation: wiggle 0.3s linear 2 both;
   animation: wiggle 0.3s linear 2 both;
   cursor: pointer;
