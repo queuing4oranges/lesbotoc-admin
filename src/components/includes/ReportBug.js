@@ -1,11 +1,11 @@
 import React, { useRef, useState, useEffect } from "react";
 import emailjs from "@emailjs/browser";
-import { serviceId, templateId, publicKey } from "./variables";
+import { serviceId, templateId, publicKey } from "../../variables"
 import swal from "sweetalert";
 
 import { AiOutlineClose, AiFillBug } from "react-icons/ai";
 
-import { Card, CardHeader, CardBody } from "reactstrap";
+import { Card, CardHeader, CardBody, Form, FormGroup, Input, Button } from "reactstrap";
 
 export default function ReportBug() {
 	const form = useRef();
@@ -20,23 +20,18 @@ export default function ReportBug() {
 	
 	const sendBugReport = (e) => {
 		e.preventDefault();
-		//TODO - does emailjs still work here?
-	emailjs.sendForm(serviceId, templateId, form.current, publicKey).then(
-	(result) => {
-	console.log(result.text);
-	e.target.reset();
-	},
-	(error) => {
-	console.log(error.text);
-	}
-	);
-	swal(
-	"Thank you!",
-	"Feedback is the breakfast for champions. (Ken Blanchard)",
-	"success"
-	);
-	setShowBugReport(false);
-	setShowBug(true);
+
+		try {
+			const result = emailjs.sendForm(serviceId, templateId, form.current, publicKey);
+			console.log(result.text);
+			e.target.reset();
+
+			swal("Thank you!", "Feedback is the breakfast for champions. (Ken Blanchard)", "success")
+			setShowBugReport(false);
+			setShowBug(true);
+		} catch (error) {
+			console.log("Something went wrong: ", error)
+		}
 	};
 
 	const openForm = () => {
@@ -50,29 +45,38 @@ export default function ReportBug() {
 	};
 
 	return (
-	<div className="report-container">
+	<div>
 		{showBugReport && (
 			<Card className="bug-form-cont" id="bugformCont">
-				<CardHeader className="d-flex flex-column justify-content-center p-3">
-					<p className="text-center text-warning">Found a bug? <AiFillBug/></p>
-					<p className="text-center text-warning">Let me know about it!</p> 
+				<CardHeader className="d-flex flex-column align-items-center p-3">
+					<p className="text-center">Found a bug? <AiFillBug/></p>
+					<p className="text-center">Let me know about it!</p> 
+					<Button className="btn btn-sm w-50 btn-warning" onClick={openForm}><AiOutlineClose/></Button>
 				</CardHeader>
 				
 				<CardBody>
-					<form ref={form} onSubmit={sendBugReport}>
-						<div className="close-x" onClick={openForm}><AiOutlineClose /></div>
-
-						<textarea name="report" required minLength="5" />
-
-						<button className="btn btn-info btn-sm w-50 mt-3" type="submit">Send</button>
-					</form>
+					<Form 
+						//use innerRef to get reference to the form element
+						innerRef={(el) => (form.current = el)} 
+						onSubmit={sendBugReport} 
+						className="d-flex flex-column align-items-center">
+						<FormGroup>
+							<Input
+								name="report"
+								type="textarea"
+								required 
+								minLength="5"
+							/>
+						</FormGroup>
+						<Button type="submit" className="btn btn-sm btn-success">Send</Button>
+					</Form>
 				</CardBody>
-		</Card>
+			</Card>
 		)}
 
-		<div className="report-bug-cont">
+		<div className="report-bug-cont mb-1">
 			{showBug && (
-				<div className="bug-cont" onClick={openForm}><AiFillBug /></div>
+				<div className="bug-cont p-1 d-flex justify-content-center align-items-center" onClick={openForm}><AiFillBug /></div>
 			)}
 		</div>
 	</div>

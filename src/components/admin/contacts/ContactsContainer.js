@@ -98,10 +98,12 @@ export default function ContactsContainer() {
 
 		{/* this is the whole contacts container */}
 		<div className="container">
-	        <Searchbar 
-				contacts={contacts} 
-				handleContactEdit={handleContactEdit} 
-			/>
+			<div className="mb-5">
+				<Searchbar 
+					contacts={contacts} 
+					handleContactEdit={handleContactEdit} 
+				/>
+			</div>
 
 		{/* add-contact and download-contacts buttons */}
 			<div
@@ -124,7 +126,7 @@ export default function ContactsContainer() {
 				<div className="btn-group" role="group" aria-label="Second group">
 					<CSVLink data={contacts} filename="lesbotoč_contacts">
 						<button className="btn btn-outline-info btn-sm">
-						Export Data
+							Export Data
 						</button>
 					</CSVLink>
 				</div>

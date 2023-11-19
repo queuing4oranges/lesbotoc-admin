@@ -26,7 +26,6 @@
 
 .error-container {
 	min-height: 5vh;
-	
 }
 
 .contact-errors p {
@@ -35,27 +34,31 @@
 
 //table styling
 .table-row:nth-child(odd) {
-  background-color: $light-blue;
+	background-color: $light-blue;
 }
 
 thead .table-hr {
-  text-align: left;
+	text-align: left;
 }
 
 //TODO: get rid of table classnames - instead use ".contacts-table .hide"
 //responsive
 @media (max-width: 600px) {
-  .col-wherefrom,
-  .col-email,
-  .col-newsletter,
-  .col-age,
-  .col-updated,
-  .col-edit,
-  .td-wherefrom,
-  .td-email,
-  .td-newsletter,
-  .td-age,
-  .td-updated {
-    display: none;
-  }
+	.col-wherefrom,
+	.col-email,
+	.col-newsletter,
+	.col-age,
+	.col-updated,
+	.col-edit,
+	.td-wherefrom,
+	.td-email,
+	.td-newsletter,
+	.td-age,
+	.td-updated {
+		display: none;
+	}
+
+	.searchbar-container {
+		width: 100% !important;
+	}
 }

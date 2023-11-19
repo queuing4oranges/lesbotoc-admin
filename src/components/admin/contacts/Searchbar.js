@@ -26,7 +26,7 @@ export default function Searchbar({ contacts, handleContactEdit }) {
 	};
 
 	return (
-		<section className="w-50 container container-md mb-3">
+		<section className="w-50 container container-md mb-3 searchbar-container">
 			<div className="input-group mb-3">
 				<input
 					type="text"
