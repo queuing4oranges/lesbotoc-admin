@@ -157,11 +157,7 @@
 }
 
 @media (max-width: 600px) {
-	.bug-form-cont {
-		width: 50%;
-
-		& h6 {
-			font-size: 0.7em;
-		}
+	.bug-form-cont, .report-bug-cont {
+		display: none;
 	}
 }
