@@ -14,10 +14,15 @@
 	}
 }
 
+.report-close-btn {
+	position: absolute;
+	top: 0;
+	right: 0;
+}
+
 .bug-form-cont {
 	z-index: 10;
 	position: fixed;
-	background-color: $lesbotoc;
 	right: 0;
 	bottom: 0px;
 	border-radius: 5px 0 0 5px ;
@@ -27,6 +32,10 @@
 		height: 20vh;
 		width: 20vw;
 		resize: none;
+	}
+	
+	& p {
+		color: white;
 	}
 }
 

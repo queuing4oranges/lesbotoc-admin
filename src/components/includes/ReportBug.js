@@ -47,11 +47,15 @@ export default function ReportBug() {
 	return (
 	<div>
 		{showBugReport && (
-			<Card className="bug-form-cont" id="bugformCont">
-				<CardHeader className="d-flex flex-column align-items-center p-3">
-					<p className="text-center">Found a bug? <AiFillBug/></p>
-					<p className="text-center">Let me know about it!</p> 
-					<Button className="btn btn-sm w-50 btn-warning" onClick={openForm}><AiOutlineClose/></Button>
+			<Card className="bug-form-cont bg-info" id="bugformCont">
+				<CardHeader className="d-flex flex-column align-items-center p-2 position-relative">
+					<div>
+						<p className="text-center m-1">Found a bug? <AiFillBug/></p>
+						<p className="text-center m-1">Let me know about it!</p> 
+					</div>
+					<div className="report-close-btn">
+						<Button className="btn btn-sm btn-warning m-1" onClick={openForm}><AiOutlineClose/></Button>
+					</div>
 				</CardHeader>
 				
 				<CardBody>
@@ -74,7 +78,7 @@ export default function ReportBug() {
 			</Card>
 		)}
 
-		<div className="report-bug-cont mb-1">
+		<div className="report-bug-cont mb-1 bg-info">
 			{showBug && (
 				<div className="bug-cont p-1 d-flex justify-content-center align-items-center" onClick={openForm}><AiFillBug /></div>
 			)}

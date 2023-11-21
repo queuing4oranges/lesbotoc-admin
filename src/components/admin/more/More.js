@@ -10,12 +10,6 @@ import { CSVLink } from "react-csv";
 import swal from "sweetalert";
 import Moment from "react-moment";
 
-//icons
-import Download from "../../../assets/svg-icons/Download";
-import Linking from "../../../assets/svg-icons/Linking";
-import Trash from "../../../assets/svg-icons/Trash";
-import Skull from "../../../assets/svg-icons/Skull";
-
 export default function More() {
   const [contacts, setContacts] = useState([]);
   const [successMsg, setSuccessMsg] = useState(false);
@@ -101,7 +95,7 @@ export default function More() {
           >
             Downloads
             <button className="btn btn-info btn-data">
-              <Download width={16} height={16} fill="white" />
+              {/* <Download width={16} height={16} fill="white" /> */}
               <p>
                 Newsletter <br /> Subscribers
               </p>
@@ -114,7 +108,7 @@ export default function More() {
             filename="speedDatingParticipants"
           >
             <button className="btn btn-info btn-data">
-              <Download width={16} height={16} fill="white" />
+              {/* <Download width={16} height={16} fill="white" /> */}
               <p>
                 Speed Dating <br /> Participants
               </p>
@@ -126,7 +120,7 @@ export default function More() {
             filename="List of Events"
           >
             <button className="btn btn-info btn-data">
-              <Download width={16} height={16} fill="white" />
+              {/* <Download width={16} height={16} fill="white" /> */}
               <p>List of Events</p>
             </button>
           </CSVLink>
@@ -138,12 +132,12 @@ export default function More() {
           >
             Links
             <button className="btn btn-info btn-data">
-              <Linking width={16} height={16} fill="white" />
+              {/* <Linking width={16} height={16} fill="white" /> */}
               <p>Mailchimp</p>
             </button>
           </a>
           <button className="btn btn-info btn-data skull">
-            <Skull width={16} height={16} fill="white" stroke="white" />
+            {/* <Skull width={16} height={16} fill="white" stroke="white" /> */}
             <p>New Admin</p>
           </button>
         </div>
@@ -183,7 +177,7 @@ export default function More() {
                           className="btn speed-delete-btn"
                           onClick={() => deleteSpeedDaters(dater.id)}
                         >
-                          <Trash width={16} height={16} fill="red" />
+                          {/* <Trash width={16} height={16} fill="red" /> */}
                         </button>
                       </td>
                     </tr>
