@@ -50,8 +50,8 @@ export default function ReportBug() {
 			<Card className="bug-form-cont bg-info" id="bugformCont">
 				<CardHeader className="d-flex flex-column align-items-center p-2 position-relative">
 					<div>
-						<p className="text-center m-1">Found a bug? <AiFillBug/></p>
-						<p className="text-center m-1">Let me know about it!</p> 
+						<p className="text-center text-danger m-1">Found a bug? <AiFillBug/></p>
+						<p className="text-center text-danger m-1">Let me know about it!</p> 
 					</div>
 					<div className="report-close-btn">
 						<Button className="btn btn-sm btn-warning m-1" onClick={openForm}><AiOutlineClose/></Button>
