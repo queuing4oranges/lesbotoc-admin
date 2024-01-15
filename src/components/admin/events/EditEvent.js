@@ -22,7 +22,7 @@ export default function EditEvent({ event, setSelectedEvent, openEditModal, setO
 	const editEvent = async (data) => {
 		setSuccess(false)
 		try {
-		const response = await axios.put(`https://api2.queuing4oranges.com/events/update.php/${id}`, {...data, id})
+		const response = await axios.put(`https://api.lesbotoc.com/events/update.php${id}`, {...data, id})
 		.then(function(response) {
 			if (response.status === 200) {
 				swal("YEAH BABY!", "You edited this event.", "success");

@@ -79,7 +79,7 @@ export function useGetEvents() {
             setLoading(true)
 
             setTimeout(async () => {
-                const response = await axios.get("https://api2.queuing4oranges.com/events/read.php")
+				const response = await axios.get("https://api.lesbotoc.com/events/read.php")
                 const data = response.data;
     
                 setEvents(data);

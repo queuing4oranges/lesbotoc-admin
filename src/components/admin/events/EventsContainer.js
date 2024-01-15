@@ -40,7 +40,7 @@ export default function EventsContainer() {
 			//append the image to the formData
 			formData.append("image_path", eventImage);
 
-			const response = await axios.post("https://api2.queuing4oranges.com/events/create.php", formData);
+			const response = await axios.post("https://api.lesbotoc.com/events/create.php", formData);
 			
 			if (response.status === 200) {
 				swal("Well, well well...", "Seems like a new event is coming soon.", "success");
@@ -69,7 +69,7 @@ export default function EventsContainer() {
 			dangerMode: true,
 		}).then((willDelete) => {
 			if (willDelete) {
-				axios.delete(`https://api2.queuing4oranges.com/events/delete.php/${id}`)
+				axios.delete(`https://api.lesbotoc.com/events/delete.php/${id}`)
 				.then(function () {
 				swal("Deleted!", "It will never hurt your eyes again. Promised.", "success");
 				setSuccess(true)
@@ -406,6 +406,18 @@ export default function EventsContainer() {
 										/>
 										<label htmlFor="description" className="pt-2">*Description of the event</label>
 									</div>
+									
+									<input
+										className="form-check-input me-2"
+										type="checkbox"
+										{...register("signup")}
+										/>
+										<label
+										htmlFor="signup"
+										className="form-check-label"
+									>
+									Sign up form?
+									</label>
 									
 									<button 
 										type="submit" 
