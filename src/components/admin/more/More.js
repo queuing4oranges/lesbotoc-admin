@@ -28,7 +28,7 @@ export default function More() {
 	}, [success]);
 
 	const getEvents = () => {
-	axios.get("https://api2.queuing4oranges.com/events/read.php")
+	axios.get("https://api.lesbotoc.com/events/read.php")
 		.then(function (response) {
 			setEvents(response.data);
 		})
@@ -39,7 +39,7 @@ export default function More() {
 	};
 
 	const getContacts = () => {
-	axios.get("https://api2.queuing4oranges.com/contacts/read.php")
+	axios.get("https://api.lesbotoc.com/contacts/read.php")
 		.then(function (response) {
 			setContacts(response.data);
 			setSuccess(true);
@@ -54,7 +54,7 @@ export default function More() {
 	};
 
 	const getSpeedDaters = () => {
-	axios.get("https://api2.queuing4oranges.com/speeddating/read.php")
+	axios.get("https://api.lesbotoc.com/speeddating/read.php")
 		.then(function (response) {
 			setSpeedDaters(response.data);
 		});
@@ -64,7 +64,7 @@ export default function More() {
 		swal("Sure?", "Do you really want to ecxlude this fine creature from the Speed Dating?", "warning")
 			.then((willDelete) => {
 				if (willDelete) {
-					axios.delete(`https://api2.queuing4oranges.com/speeddating/delete.php/${id}`)
+					axios.delete(`https://api.lesbotoc.com/speeddating/delete.php/${id}`)
 						.then(function () {
 							swal("Deleted!", "She will stay single forever.", "success");
 							setSuccess(!success)

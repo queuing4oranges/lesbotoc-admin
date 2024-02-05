@@ -20,16 +20,20 @@ export default function EditEvent({ event, setSelectedEvent, openEditModal, setO
 	});
 	
 	const editEvent = async (data) => {
+		console.log(data)
 		setSuccess(false)
 		try {
-		const response = await axios.put(`https://api.lesbotoc.com/events/update.php${id}`, {...data, id})
-		.then(function(response) {
+			const response = await axios.put(`https://api.lesbotoc.com/events/update.php/${id}`, {...data, id}, {
+				headers: {
+					'Content-Type': 'application/json'
+				}
+			});
+		
 			if (response.status === 200) {
 				swal("YEAH BABY!", "You edited this event.", "success");
 			} else if(response.status === 500){
 				swal("Oops", "Not able to edit event", "error")
 			}
-		})
 		} catch(error) {
 			console.log("Error editing event:", error)
 		}

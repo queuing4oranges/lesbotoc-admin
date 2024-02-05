@@ -37,7 +37,7 @@ export default function EventsArchive() {
 			dangerMode: true,
 		}).then((willDelete) => {
 			if (willDelete) {
-				axios.delete(`https://api2.queuing4oranges.com/events/delete.php/${id}`)
+				axios.delete(`https://api.lesbotoc.com/events/delete.php/${id}`)
 				.then(function () {
 				swal("Deleted!", "It will never hurt your eyes again. Promised.", "success");
 				setSuccess(true)
@@ -55,7 +55,7 @@ export default function EventsArchive() {
 	}
 	
 	//TODO: make "show event or sth that shows pic for event"
-	//axios.get(`https://api2.queuing4oranges.com/events/single_read.php/${id}`)
+	//axios.get(`https://api.lesbotoc.com/events/single_read.php/${id}`)
 
 
 	return (

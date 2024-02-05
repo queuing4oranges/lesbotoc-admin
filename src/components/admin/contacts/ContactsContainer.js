@@ -32,7 +32,7 @@ export default function ContactsContainer() {
 		reset,
 		formState: { errors },
 		} = useForm();
-
+		
 	//getting all contacts on page load
 	useEffect(() => {
 		getContacts();
@@ -42,7 +42,7 @@ export default function ContactsContainer() {
 	const addContact = async (data) => {
 		try {
 			const response = await axios.post(
-			"https://api2.queuing4oranges.com/contacts/create.php",
+			"https://api.lesbotoc.com/contacts/create.php",
 			data
 			);
 
@@ -146,7 +146,7 @@ export default function ContactsContainer() {
 								<td className="td td-wherefrom">{contact.wherefrom}</td>
 								<td className="td td-email">{contact.email}</td>
 								<td className="td td-phone">{contact.phone}</td>
-								<td className="td td-newsletter">{contact.newsletter === 0 ? "no" : "yes"}</td>
+								<td className="td td-newsletter">{contact.newsletter === "0" ? "no" : "yes"}</td>
 								<td className="td td-age">{contact.age}</td>
 								<td className="td td-updated">
 								{!contact.updated_at ? (

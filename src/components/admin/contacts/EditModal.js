@@ -9,13 +9,13 @@ export default function EditModal({ contact, openEditModal, setOpenEditModal, ge
 
 	const { register, handleSubmit, reset, formState: { errors } } = useForm({
 		defaultValues: {
-			id, name, wherefrom, email, phone, newsletter, age, updated_at 
+			id, name, wherefrom, email, phone, age, updated_at, newsletter: contact.newsletter === "1"
 		}
 	})
 	
 	const editContact = async (data) => {
 		try {
-			const response = await axios.put(`https://api2.queuing4oranges.com/contacts/update.php/${id}`, {...data, id})
+			const response = await axios.put(`https://api.lesbotoc.com/contacts/update.php/${id}`, {...data, id})
 			.then(function(response) {
 				if (response.status === 200) {
 					swal("YEAH BABY!", "You edited this Contact.", "success");

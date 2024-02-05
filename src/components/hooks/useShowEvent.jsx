@@ -10,7 +10,7 @@ export default function useShowEvent() {
     const showEvent = async (id) => {
     try {
         setLoading(true)
-        const response = await axios.get(`https://api2.queuing4oranges.com/events/single_read.php/${id}`)
+		const response = await axios.get(`https://api.lesbotoc.com/events/single_read.php/${id}`)
         const data = response.data;
 
         setOneEvent(data)

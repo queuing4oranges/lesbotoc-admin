@@ -12,7 +12,7 @@ export function useGetContacts() {
     const getContacts = async () => {
         try {
             setLoading(true)
-            const response = await axios.get("https://api2.queuing4oranges.com/contacts/read.php")
+			const response = await axios.get("https://api.lesbotoc.com/contacts/read.php")
             const data = await response.data;
             setContacts(data);
             setLoading(false);
@@ -44,7 +44,7 @@ export function useDeleteContact() {
         .then((willDelete) => {
             if(willDelete){
                 axios
-          .delete(`https://api2.queuing4oranges.com/contacts/delete.php/${id}`)
+          .delete(`https://api.lesbotoc.com/contacts/delete.php/${id}`)
           .then(function(response){
             if(response.status === 200) {
                 swal(
@@ -107,7 +107,7 @@ export function useShowEvent() {
     const showEvent = async (id) => {
     try {
         setLoading(true)
-        const response = await axios.get(`https://api2.queuing4oranges.com/events/single_read.php/${id}`)
+		const response = await axios.get(`https://api.lesbotoc.com/events/single_read.php/${id}`)
         const data = response.data;
 
         setOneEvent(data)
@@ -134,7 +134,7 @@ export function useGetImages() {
             setLoading(true)
 
             setTimeout(async () => {
-                const response = await axios.get("https://api2.queuing4oranges.com/images/read.php")
+				const response = await axios.get("https://api.lesbotoc.com/images/read.php")
                 const data = response.data
     
                 setImages(data);

@@ -22,7 +22,7 @@ export default function ImageUpload() {
 	
 	//displaying images (from images folder via image_path)
 	const getImages = () => {
-		axios.get("https://api2.queuing4oranges.com/images/read.php")
+		axios.get("https://api.lesbotoc.com/images/read.php")
 		.then(function (response) {
 			setImages(response.data);
 		});
@@ -37,7 +37,7 @@ export default function ImageUpload() {
 			const image = data.image[0];
 
 			formData.append("image", image);
-			const response = await axios.post("https://api2.queuing4oranges.com/images/upload.php", formData);
+			const response = await axios.post("https://api.lesbotoc.com/images/upload.php", formData);
 				if (response.status === 200) {
 					swal("YEAH BABY!", "You uploaded an image.", "success");
 				} else {
@@ -63,7 +63,7 @@ export default function ImageUpload() {
 			dangerMode: true,
 			}).then((willDelete) => {
 				if (willDelete) {
-					axios.delete(`https://api2.queuing4oranges.com/images/delete.php/${id}`)
+					axios.delete(`https://api.lesbotoc.com/images/delete.php/${id}`)
 						.then(function (response) {
 							if (response.status === 200) {
 								swal("Deleted", "Dont ever worry about it.", "success");
@@ -201,7 +201,7 @@ export default function ImageUpload() {
 					<div className="image-card mb-4" key={key}>
 						<img
 							alt={`${img.filename}`}
-							src={`https://api2.queuing4oranges.com/images/images/${img.filename}`}
+							src={`https://api.lesbotoc.com/images/images/${img.filename}`}
 						/>
 						
 						<div className="d-inline w-100 ps-4">

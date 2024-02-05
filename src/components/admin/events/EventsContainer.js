@@ -35,12 +35,13 @@ export default function EventsContainer() {
 			//get the form element and create a FormData object
 			const form = document.getElementById("event-form");
 			const formData = new FormData(form);
+			 console.log("Form Data before appending image:", JSON.stringify(Object.fromEntries(formData)));
 			const eventImage = data.image_path[0];
 			
 			//append the image to the formData
 			formData.append("image_path", eventImage);
-
 			const response = await axios.post("https://api.lesbotoc.com/events/create.php", formData);
+			console.log(formData)
 			
 			if (response.status === 200) {
 				swal("Well, well well...", "Seems like a new event is coming soon.", "success");
@@ -411,6 +412,7 @@ export default function EventsContainer() {
 										className="form-check-input me-2"
 										type="checkbox"
 										{...register("signup")}
+										defaultChecked={false}
 										/>
 										<label
 										htmlFor="signup"
